@@ -1,10 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{% load static %}
+<footer class="py-3 my-4">
+    <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+        <li><a href="{% url 'post_list' %}" class="nav-link px-2 link-secondary">Новости</a></li>
+        <li><a href="#" class="nav-link px-2 link-dark">Конкурсы</a></li>
+        <li><a href="#" class="nav-link px-2 link-dark">Полезные ссылки</a></li>
+        <li><a href="#" class="nav-link px-2 link-dark">Найди друга</a></li>
+        <li><a href="#" class="nav-link px-2 link-dark">О проекте</a></li>
+        <li><a href="#" class="nav-link px-2 link-dark">Контакты</a></li>
+    </ul>
+    <p class="text-center text-muted">© 2022 Дети Арктики, Inc</p>
+</footer>
