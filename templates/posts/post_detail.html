@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+    <div class="container py-5">
+        <article>
+            <h3>{{ post.title }}</h3>
+            <ul>
+                <li>
+                    Автор: {{ post.author.get_full_name }}
+                </li>
+                <li></li>
+                <li>
+                    Дата публикации: {{ post.pub_date|date:"d E Y" }}
+                </li>
+                <img src="{{ post.image }}" alt="Изображение">
+            </ul>
+            <p>{{ post.text }}</p>
+        </article>
+    </div>
+{% endblock %}
