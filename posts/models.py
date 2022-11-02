@@ -32,5 +32,5 @@ class Post(models.Model):
 
 class UsefulLink(models.Model):
     link = models.URLField()
-    description = models.TextField(null=True, blank=True)
+    description = models.TextField()
 

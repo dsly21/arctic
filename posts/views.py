@@ -3,16 +3,16 @@ from django.shortcuts import render
 from posts.models import Post, UsefulLink
 
 
-# def get_post_list(filter_value):
-#     if filter_value:
-#         posts = Post.objects.filter(post_type=Post.PostType.{filter_value}).order_by('-pub_date')[:10]
-#     else:
-#         posts = Post.objects.order_by('-pub_date')[:10]
-#
-#     context = {
-#         'posts': posts,
-#     }
-#     return render(request, 'posts/index.html', context)
+def get_post_list(request, filter_value):
+    if filter_value:
+        posts = Post.objects.filter(post_type=Post.PostType.filter_value)
+    else:
+        posts = Post.objects.order_by('-pub_date')[:10]
+
+    context = {
+        'posts': posts,
+    }
+    return render(request, 'posts/index.html', context)
 
 
 def index(request):
@@ -43,12 +43,7 @@ def post_detail(request, pk):
 
 
 def subscribers_post_list(request):
-    posts = Post.objects.filter(post_type=Post.PostType.SUBSCRIBERS).order_by('-pub_date')[:10]
-
-    context = {
-        'posts': posts,
-    }
-    return render(request, 'posts/index.html', context)
+    get_post_list(request, 'SUBSCRIBERS')
 
 
 def competition_post_list(request):
@@ -66,4 +61,4 @@ def useful_links(request):
     context = {
         'links': links,
     }
-    return render(request, 'posts/useful_links', context)
+    return render(request, 'posts/useful_links.html', context)
