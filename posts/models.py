@@ -34,3 +34,13 @@ class UsefulLink(models.Model):
     link = models.URLField()
     description = models.TextField()
 
+
+class ContactInformation(models.Model):
+    email = models.EmailField()
+    phone_number = models.CharField(max_length=20, blank=True, null=True)
+
+
+class AboutUs(models.Model):
+    text = models.TextField()
+
+

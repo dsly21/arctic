@@ -1,11 +1,16 @@
 from django.shortcuts import render
 
-from posts.models import Post, UsefulLink
+from posts.models import (
+    Post,
+    UsefulLink,
+    ContactInformation,
+    AboutUs,
+)
 
 
-# def get_post_list(request, filter_value):
+# def get_post_list(filter_value):
 #     if filter_value:
-#         posts = Post.objects.filter(post_type=Post.PostType.filter_value)
+#         posts = Post.objects.filter(post_type=Post.PostType.{filter_value}).order_by('-pub_date')[:10]
 #     else:
 #         posts = Post.objects.order_by('-pub_date')[:10]
 #
@@ -67,3 +72,21 @@ def useful_links(request):
         'links': links,
     }
     return render(request, 'posts/useful_links.html', context)
+
+
+def get_contact_info_inst(request):
+    info = ContactInformation.objects.first()
+
+    context = {
+        'info': info,
+    }
+    return render(request, 'posts/contact_info.html', context)
+
+
+def get_about_us_inst(request):
+    about_us_inst = AboutUs.objects.first()
+
+    context = {
+        'about_us': about_us_inst,
+    }
+    return render(request, 'posts/about.html', context)

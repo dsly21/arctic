@@ -1,5 +1,9 @@
 from django.contrib import admin
-from posts.models import Post, UsefulLink
+from posts.models import (
+    Post,
+    UsefulLink,
+    ContactInformation, AboutUs
+)
 
 
 class PostAdmin(admin.ModelAdmin):
@@ -20,5 +24,18 @@ class UsefulLinkAdmin(admin.ModelAdmin):
     )
 
 
+class ContactInformationAdmin(admin.ModelAdmin):
+    list_display = (
+        'email',
+        'phone_number'
+    )
+
+
+class AboutUSAdmin(admin.ModelAdmin):
+    list_display = ('text',)
+
+
 admin.site.register(Post, PostAdmin)
 admin.site.register(UsefulLink, UsefulLinkAdmin)
+admin.site.register(ContactInformation, ContactInformationAdmin)
+admin.site.register(AboutUs, AboutUSAdmin)
