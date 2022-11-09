@@ -32,7 +32,17 @@ urlpatterns = [
         'links/',
         views.useful_links,
         name='useful_links'
-    )
+    ),
+    path(
+        'contacts/',
+        views.get_contact_info_inst,
+        name='contacts'
+    ),
+    path(
+        'about/',
+        views.get_about_us_inst,
+        name='about_us'
+    ),
     ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
