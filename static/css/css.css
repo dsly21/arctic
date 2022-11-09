@@ -1,0 +1,13 @@
+.d-flex {
+    justify-content:center !important;
+}
+@media (min-width: 768px) {
+    .d-flex {
+        justify-content:center !important;
+    }
+}
+@media (min-width: 1024px) {
+    .d-flex {
+        justify-content:center !important;
+    }
+}

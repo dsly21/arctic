@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container py-5">
+        <h1>Контактная информация</h1>
+        <article>
+            <ul>
+                <li>
+                    <p>телефон {{ info.phone_number }}</p>
+                </li>
+                <li>
+                    <p>электронная почта {{ info.email }}</p>
+                </li>
+            </ul>
+        </article>
+    </div>
+{% endblock %}
