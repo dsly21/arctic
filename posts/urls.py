@@ -1,7 +1,7 @@
+from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 
-from Arctic import settings
 from . import views
 
 app_name = 'posts'
@@ -43,7 +43,5 @@ urlpatterns = [
         views.get_about_us_inst,
         name='about_us'
     ),
-    ]
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
 

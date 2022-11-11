@@ -1,7 +1,8 @@
 # users/views.py
 # Импортируем CreateView, чтобы создать ему наследника
-#from django.contrib.auth.forms import AuthenticationForm
+# from django.contrib.auth.forms import AuthenticationForm
 from django.views.generic import CreateView
+from django.contrib.auth.views import PasswordChangeDoneView, PasswordChangeView
 
 # Функция reverse_lazy позволяет получить URL по параметрам функции path()
 # Берём, тоже пригодится
@@ -18,11 +19,9 @@ class SignUp(CreateView):
     template_name = 'users/signup.html'
 
 
-class LoginView(CreateView):
-    form_class = AuthenticationForm
-    success_url = reverse_lazy('posts:index')
-    template_name = 'users/login.html'
+class CustomPasswordChangeDoneView(PasswordChangeDoneView):
+    template_name = 'users/password_change_done.html'
 
 
-class LogoutView(CreateView):
-    pass
+class CustomPasswordChangeView(PasswordChangeView):
+    success_url = 'users/password_change_done.html'

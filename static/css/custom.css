@@ -5,6 +5,10 @@
     .d-flex {
         justify-content:center !important;
     }
+    .offset-md-4 {
+        margin-left: auto;
+        margin-right: auto;
+}
 }
 @media (min-width: 1024px) {
     .d-flex {

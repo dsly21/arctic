@@ -23,7 +23,11 @@ class Post(models.Model):
         on_delete=models.CASCADE,
         related_name='posts'
     )
-    image = models.ImageField()
+    image = models.ImageField(
+        'Картинка',
+        upload_to='posts/',
+        blank=True
+    )
     post_type = models.TextField(
         choices=PostType.choices,
         default='общий пост',

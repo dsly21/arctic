@@ -1,20 +1,8 @@
+{% extends "posts/post_detail.html" %}
+{% block content %}
 <div class="container py-5">
-    <h1>Новости</h1>
-    <article>
-        {% for post in posts %}
-            <h3>{{ post.title }}</h3>
-            <ul>
-                <li>
-                    Автор: {{ post.author.get_full_name }}
-                </li>
-                <li>
-                    Дата публикации: {{ post.pub_date|date:"d E Y" }}
-                </li>
-                <img src="{{ post.image }}" alt="Изображение">
-            </ul>
-            <p>{{ post.text }}</p>
-            {% if not forloop.last %}
-                <hr>{% endif %}
-        {% endfor %}
-    </article>
+    {% for post in posts %}
+        {% include "posts/post_detail.html" %}
+    {% endfor %}
 </div>
+{% endblock %}

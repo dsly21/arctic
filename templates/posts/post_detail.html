@@ -1,19 +1,21 @@
-{% extends "base.html" %}
+{% load thumbnail %}
 {% block content %}
-    <div class="container py-5">
-        <article>
-            <h3>{{ post.title }}</h3>
-            <ul>
-                <li>
-                    Автор: {{ post.author.get_full_name }}
-                </li>
-                <li></li>
-                <li>
-                    Дата публикации: {{ post.pub_date|date:"d E Y" }}
-                </li>
-                <img src="{{ post.image }}" alt="Изображение">
-            </ul>
-            <p>{{ post.text }}</p>
-        </article>
-    </div>
+    <article>
+        <h3>{{ post.title }}</h3>
+        <ul style="padding-left: 0">
+            <li>
+                <b>Автор:</b> {{ post.author.get_full_name }}
+            </li>
+            <li>
+                <b>Дата публикации:</b> {{ post.pub_date|date:"d E Y" }}
+            </li>
+            {% thumbnail post.image "960x339" crop="center" upscale=True as im %}
+                <img class="card-img my-3" src="{{ im.url }}" alt="Изображение" style="margin: 0;">
+            {% endthumbnail %}
+        </ul>
+        <p>{{ post.text }}</p>
+        {% if not forloop.last %}
+            <hr>{% endif %}
+    </article>
+
 {% endblock %}
