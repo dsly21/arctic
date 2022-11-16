@@ -1,8 +1,9 @@
 from django.contrib import admin
+from embed_video.admin import AdminVideoMixin
+
 from posts.models import (
     Post,
-    UsefulLink,
-    ContactInformation, AboutUs
+    ContactInformation,
 )
 
 
@@ -31,11 +32,5 @@ class ContactInformationAdmin(admin.ModelAdmin):
     )
 
 
-class AboutUSAdmin(admin.ModelAdmin):
-    list_display = ('text',)
-
-
 admin.site.register(Post, PostAdmin)
-admin.site.register(UsefulLink, UsefulLinkAdmin)
 admin.site.register(ContactInformation, ContactInformationAdmin)
-admin.site.register(AboutUs, AboutUSAdmin)

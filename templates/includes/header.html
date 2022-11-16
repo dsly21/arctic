@@ -13,13 +13,13 @@
     </ul>
 
     {% if not user.is_authenticated %}
-        <div class="col-md-3 text-end" style="padding-right: 2%">
+        <div class="col-md-3 text-end">
             <a href="{% url 'users:login' %}"><button type="button" class="btn btn-outline-dark me-2 btn-sm">Войти</button></a>
             <a href="{% url 'users:signup' %}"><button type="button" class="btn btn-dark btn-sm">Регистрация</button></a>
         </div>
     {% endif %}
     {% if user.is_authenticated %}
-        <div class="col-md-3 text-end" style="padding-right: 2%">
+        <div class="col-md-3 text-end">
             {{ user.username }}
         </div>
     {% endif %}

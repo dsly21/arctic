@@ -1,5 +1,3 @@
-from django.conf import settings
-from django.conf.urls.static import static
 from django.urls import path
 
 from . import views
@@ -37,11 +35,6 @@ urlpatterns = [
         'contacts/',
         views.get_contact_info_inst,
         name='contacts'
-    ),
-    path(
-        'about/',
-        views.get_about_us_inst,
-        name='about_us'
     ),
 ]
 

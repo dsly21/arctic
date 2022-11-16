@@ -2,9 +2,7 @@ from django.shortcuts import render
 
 from posts.models import (
     Post,
-    UsefulLink,
     ContactInformation,
-    AboutUs,
 )
 
 
@@ -66,12 +64,12 @@ def competition_post_list(request):
 
 
 def useful_links(request):
-    links = UsefulLink.objects.all()
+    posts = Post.objects.filter(post_type=Post.PostType.LINK_POST).order_by('-pub_date')[:10]
 
     context = {
-        'links': links,
+        'posts': posts,
     }
-    return render(request, 'posts/useful_links.html', context)
+    return render(request, 'posts/index.html', context)
 
 
 def get_contact_info_inst(request):
@@ -81,12 +79,3 @@ def get_contact_info_inst(request):
         'info': info,
     }
     return render(request, 'posts/contact_info.html', context)
-
-
-def get_about_us_inst(request):
-    about_us_inst = AboutUs.objects.first()
-
-    context = {
-        'about_us': about_us_inst,
-    }
-    return render(request, 'posts/about.html', context)

@@ -1,6 +1,15 @@
 .d-flex {
     justify-content:center !important;
 }
+.mb-4 {
+     margin-bottom: 0!important;
+}
+.bg-image {
+    height: 100vh;
+    background-size: cover;
+    background-position: center center;
+    /*text-align: center;*/
+}
 @media (min-width: 768px) {
     .d-flex {
         justify-content:center !important;
@@ -15,3 +24,17 @@
         justify-content:center !important;
     }
 }
+
+/*.videoWrapper {*/
+/*        position: relative;*/
+/*        padding-bottom: 56.25%;*/
+/*        padding-top: 25px;*/
+/*        height: 0;*/
+/*}*/
+/*.videoWrapper iframe {*/
+/*        position: absolute;*/
+/*        top: 0;*/
+/*        left: 0;*/
+/*        width: 100%;*/
+/*        height: 100%;*/
+/*}*/
