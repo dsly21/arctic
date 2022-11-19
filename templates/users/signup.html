@@ -1,6 +1,7 @@
-<!-- templates/users/signup.html -->
-
 {% extends "base.html" %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
 {% block title %}Зарегистрироваться{% endblock %}
 {% block content %}
     <div class="row justify-content-center">
@@ -30,26 +31,27 @@
                         {% csrf_token %}
 
                         {# Выводим поля в цикле, по отдельности #}
-                        {% for field in form %}
-                            <div class="form-group row my-3" style="padding-left: 3%; padding-right: 3%">
-                                <label for="{{ field.id_for_label }}">
-                                    {{ field.label }}
-                                    {% if field.field.required %}
-                                        <span class="required text-danger">*</span>
-                                    {% endif %}
-                                </label>
+                        {{ form|crispy }}
+{#                        {% for field in form %}#}
+{#                            <div class="form-group row my-3" style="padding-left: 3%; padding-right: 3%">#}
+{#                                <label for="{{ field.id_for_label }}">#}
+{#                                    {{ field.label }}#}
+{#                                    {% if field.field.required %}#}
+{#                                        <span class="required text-danger">*</span>#}
+{#                                    {% endif %}#}
+{#                                </label>#}
                                 {# К полю ввода добавляем атрибут class #}
-                                {{ field|addclass:'form-control' }}
-                                {% if field.help_text %}
-                                    <small
-                                            id="{{ field.id_for_label }}-help"
-                                            class="form-text text-muted"
-                                    >
-                                        {{ field.help_text|safe }}
-                                    </small>
-                                {% endif %}
-                            </div>
-                        {% endfor %}
+{#                                {{ field|addclass:'form-control' }}#}
+{#                                {% if field.help_text %}#}
+{#                                    <small#}
+{#                                            id="{{ field.id_for_label }}-help"#}
+{#                                            class="form-text text-muted"#}
+{#                                    >#}
+{#                                        {{ field.help_text|safe }}#}
+{#                                    </small>#}
+{#                                {% endif %}#}
+{#                            </div>#}
+{#                        {% endfor %}#}
                         <div class="col-md-6 offset-md-4">
                             <button type="submit" class="btn btn-dark">
                                 Зарегистрироваться

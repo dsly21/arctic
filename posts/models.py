@@ -1,4 +1,4 @@
-from django.contrib.auth import get_user_model
+from django.conf import settings
 from django.db import models
 from embed_video.fields import EmbedVideoField
 
@@ -6,8 +6,6 @@ SUBSCRIBERS = 'FROM_SUBSCRIBERS'
 COMPETITION = 'COMPETITION'
 BASE_POST = 'BASE_POST'
 LINK_POST = 'LINK_POST'
-
-User = get_user_model()
 
 
 class Post(models.Model):
@@ -17,13 +15,20 @@ class Post(models.Model):
         BASE_POST = 'общий пост'
         LINK_POST = 'пост с ссылкой'
 
-    title = models.CharField(max_length=256)
-    text = models.TextField()
-    pub_date = models.DateTimeField(auto_now_add=True)
+    title = models.CharField(
+        max_length=256,
+        verbose_name='заголовок'
+    )
+    text = models.TextField(verbose_name='текст')
+    pub_date = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='дата публикации'
+    )
     author = models.ForeignKey(
-        User,
+        settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name='posts'
+        related_name='posts',
+        verbose_name='автор'
     )
     image = models.ImageField(
         'Картинка',
@@ -31,10 +36,15 @@ class Post(models.Model):
         blank=True,
         null=True,
     )
-    video = EmbedVideoField(blank=True, null=True)
+    video = EmbedVideoField(
+        blank=True,
+        null=True,
+        verbose_name='видео'
+    )
     post_type = models.TextField(
         choices=PostType.choices,
-        default='общий пост',
+        default=PostType.BASE_POST,
+        verbose_name='тип публикации'
     )
 
 

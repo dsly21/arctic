@@ -4,11 +4,18 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from django.views.static import serve
 
+from users.views import FindFriendView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('posts.urls', namespace='posts')),
     path('auth/', include('users.urls', namespace='users')),
     path('auth/', include('django.contrib.auth.urls')),
+    path(
+        'find_friend/',
+        FindFriendView.as_view(),
+        name='find_friend'
+    )
 ]
 if settings.DEBUG:
     urlpatterns += static(
@@ -21,3 +28,4 @@ else:
         re_path(f'^{settings.STATIC_URL.lstrip("/")}(?P<path>.*)$',
             serve, {'document_root': settings.STATIC_ROOT}),
     ]
+
