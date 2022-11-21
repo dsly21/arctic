@@ -1,3 +1,5 @@
+{% load static %}
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
@@ -10,17 +12,26 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Контактные данные вашего друга</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                {#                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>#}
             </div>
-            <div class="modal-body">
-                <p>
-                    {{ friend.user.first_name }} {{ friend.user.last_name }}
-                    живёт по адресу: {{ friend.postal_address }} напишите
-                    ему!
-                </p>
-            </div>
-            <div class="modal-footer">
-                <a href="{% url 'posts:post_list' %}" class="btn btn-dark btn-sm">Закрыть</a>
+            <div class="modal-body" style="margin-left: 2%; margin-right: 2%">
+                {#                <div class="d-flex align-items-center bg-image"#}
+                {#                        style="background-image: url({% static '/img/arctic_child.jpeg' %});">#}
+                <div class="text-dark" style="margin-bottom: 2%; font-size: large"><b>Теперь вы можете отправить письмо
+                    или открытку
+                    вашему другу, данные для отправки ниже.</b></div>
+                <li>Никнейм в соц. сети: {{ friend.social_network_nickname }}</li>
+                <li>ФИО получателя: {{ friend.recipient_full_name }}</li>
+                <li>Населённый пункт: {{ friend.locality }}</li>
+                <li>Область, край или район: {{ friend.country_subject }}</li>
+                <li>Адрес: {{ friend.postal_address }}</li>
+                <li>Почтовый индекс: {{ friend.zip_code }}</li>
+                <div class="text-dark" style="margin-top: 2%; font-size: large"><b>Вашему другу будет очень приятно!</b>
+                </div>
+                {#                </div>#}
+                <div class="modal-footer">
+                    <a href="{% url 'posts:post_list' %}" class="btn btn-dark btn-sm">Закрыть</a>
+                </div>
             </div>
         </div>
     </div>

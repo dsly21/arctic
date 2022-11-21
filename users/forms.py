@@ -45,6 +45,10 @@ class FindFriendForm(forms.ModelForm):
     class Meta:
         model = UserFriendInstance
         fields = [
+            'recipient_full_name',
+            'country_subject',
+            'locality',
             'postal_address',
-            'social_network_nickname'
+            'zip_code',
+            'social_network_nickname',
         ]

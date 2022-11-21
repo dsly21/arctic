@@ -16,8 +16,12 @@ class UserAdmin(admin.ModelAdmin):
 class UserFriendInstanceAdmin(admin.ModelAdmin):
     list_display = (
         'user',
+        'recipient_full_name',
         'social_network_nickname',
         'postal_address',
+        'locality',
+        'country_subject',
+        'zip_code',
         'date_action_use',
         'user_friends',
     )
