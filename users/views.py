@@ -1,32 +1,20 @@
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views import View
-from django.views.generic import CreateView
+from django.views.generic import CreateView, TemplateView
 from django.contrib.auth.views import PasswordChangeDoneView, PasswordChangeView
 
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 
 from .forms import CreationForm, FindFriendForm
 from .models import UserFriendInstance
 
 
-def find_friend_view(request):
-    request_user = request.user
-    # из всех друзей возвращаем ближайшего по возрасту, смотрим, чтобы он не был в списке друзей.
-    # создаём инстанс User Friends, либо меняем если уже есть. Добавляем туда нового друга и обновляем дату
-    # не должен получать сам себя
-    # if UserFriendInstance.objects.exists(): # есть ли кто-то вообще
-    #     if UserFriendInstance.objects.filter(user=request_user.id).exists()): # искал ли пользователь друзей раньше
-    #         if UserFriendInstance.objects.get(user=request_user).date_action_use.hour < 24: # сколько прошло времени с последнего поиска
-    #             error_message = 'слишком частое использование, вернитесь позже'
-    #     else:
-    #         UserFriendInstance.objects.create(user=request_user, )
-    #     friend = UserFriendInstance.objects.filter(user_friends__not_in=request_user.id).first()
-    # else:
-    #     error_message = 'Друзей не нашлось'
-    context = {}
-
-    return render(request, 'users/find_friend.html', context)
+def find_friend_result_view(request, obj):
+    context = {
+        'friend': obj,
+    }
+    return render(request, 'users/find_friend_modal.html', context)
 
 
 class SignUp(CreateView):
@@ -69,11 +57,12 @@ class FindFriendView(View):
                     # Возвращаем друга, но не самого себя
                     # Возвращаем друга, которого нет в списке друзей пользователя
                     friend = UserFriendInstance.objects\
-                        .filter(user__not=request.user.id)\
-                        .filter(user_friends__not_in=UserFriendInstance.objects
+                        .exclude(user=request.user)\
+                        .exclude(user_friends=UserFriendInstance.objects
                                 .get(user=request.user).user_friends)\
                         .first()
-                    HttpResponse('')
+                    return render(request, "users/find_friend_modal.html", context={'friend': friend})
+                    # return HttpResponseRedirect(reverse('find_friend_modal', args=(friend,)))
                 else:
                     friend = UserFriendInstance.objects.first()
                     UserFriendInstance.objects.create(
@@ -83,9 +72,8 @@ class FindFriendView(View):
                         user_friends=request.user.id
                     )
 
-                    HttpResponse('')
+                    return render(request, "users/find_friend_modal.html", context={'friend': friend})
             else:
                 error_message = 'Друзей не нашлось'
         return render(request, self.template_name, {'form': form})
-
 

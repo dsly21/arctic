@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from django.views.static import serve
 
-from users.views import FindFriendView
+from users.views import FindFriendView, find_friend_result_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -15,7 +15,12 @@ urlpatterns = [
         'find_friend/',
         FindFriendView.as_view(),
         name='find_friend'
-    )
+    ),
+    path(
+        'find_friend_modal/',
+        find_friend_result_view,
+        name='find_friend_modal'
+    ),
 ]
 if settings.DEBUG:
     urlpatterns += static(
@@ -24,8 +29,7 @@ if settings.DEBUG:
 else:
     urlpatterns += [
         re_path(f'^{settings.MEDIA_URL.lstrip("/")}(?P<path>.*)$',
-            serve, {'document_root': settings.MEDIA_ROOT}),
+                serve, {'document_root': settings.MEDIA_ROOT}),
         re_path(f'^{settings.STATIC_URL.lstrip("/")}(?P<path>.*)$',
-            serve, {'document_root': settings.STATIC_ROOT}),
+                serve, {'document_root': settings.STATIC_ROOT}),
     ]
-
