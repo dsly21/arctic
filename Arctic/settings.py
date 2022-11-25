@@ -31,6 +31,8 @@ ALLOWED_HOSTS = [
     '[::1]',
     'testserver',
     'adsl21op.beget.tech',
+    'https://arktikavkonverte.ru/static/img/fav/logo.jpg',
+    'arktikavkonverte.ru'
 ]
 
 

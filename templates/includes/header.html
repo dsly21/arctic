@@ -8,7 +8,7 @@
 
     <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
         <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
-            <use xlink:href="file:///home/nikolay/PycharmProjects/Arctic/static/img/fav/logo.jpg"></use>
+            <use xlink:href="https://arktikavkonverte.ru/static/img/fav/logo.jpg"></use>
         </svg>
     </a>
 
@@ -24,7 +24,7 @@
     {% endif %}
     {% if user.is_authenticated %}
         <div class="col-md-3 text-end">
-            {{ user.username }}
+            <a href="{% url 'users:user-profile' %}" class="px-2 link-dark" >{{ user.username }}</a>
         </div>
     {% endif %}
 </header>

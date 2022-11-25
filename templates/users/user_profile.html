@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-md-4 p-5">
+            <div class="card">
+
+                <div class="card-header ">Профиль пользователя</div>
+
+                <div class="card-body">
+                    {% if form.errors %}
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <div class="alert alert-danger">
+                                    {{ error|escape }}
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {{ error|escape }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <div class="form-content">
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ user_form.first_name|as_crispy_field }}
+                            {{ user_form.last_name|as_crispy_field }}
+                            {{ user_form.birth_year|as_crispy_field }}
+                            {{ user_form.arctic_region_flag|as_crispy_field }}
+                            <div class="d-flex justify-content-between bd-highlight mb-2">
+                                <div class="me-auto p-1 bd-highlight">
+                                    <a href="{% url 'users:password_change' %}">Сменить пароль</a>
+                                </div>
+                                <div class="me-auto p-1 bd-highlight">
+                                    <a href="{% url 'users:logout' %}">Выйти из профиля</a>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-center">
+                                <button type="submit" class="btn btn-dark">Сохранить изменения</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div> <!-- card body -->
+            </div> <!-- card -->
+        </div> <!-- col -->
+    </div> <!-- row -->
+{% endblock %}

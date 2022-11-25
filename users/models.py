@@ -8,10 +8,6 @@ class User(AbstractUser):
         ARCTIC = True
         NOT_ARCTIC = False
 
-    class Meta:
-        verbose_name = 'Пользователь'
-        verbose_name_plural = 'Пользователи'
-
     birth_year = models.IntegerField(
         verbose_name='дата рождения',
     )
@@ -21,13 +17,17 @@ class User(AbstractUser):
         default=UserRegion.NOT_ARCTIC,
     )
 
+    class Meta:
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
+
 
 class UserFriendInstance(models.Model):
     class Meta:
         verbose_name = 'Пользователь в базе данных друзей'
         verbose_name_plural = 'Пользователи в базе данных друзей'
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     recipient_full_name = models.CharField(
         max_length=300,
         verbose_name='ФИО получателя',
@@ -53,16 +53,19 @@ class UserFriendInstance(models.Model):
         help_text='Укажите индекс вашего почтового отделения.'
     )
     social_network_nickname = models.CharField(
-        max_length=60, verbose_name='Имя в социальной сети',
-        help_text='Не забудьте указать название социальной сети'
+        max_length=60, verbose_name='Укажите как вас найти "вконтакте"',
+        help_text='Например id222829594'
     )
 
     date_action_use = models.DateTimeField(
         default=timezone.now(),
         verbose_name='дата использования функции "найти друзей"'
     )
-    user_friends = models.TextField(
+    user_friends = models.ForeignKey(
+        User,
         blank=True,
         null=True,
-        verbose_name='список друзей пользователя'
+        verbose_name='список друзей пользователя',
+        on_delete=models.CASCADE,
+        related_name='friends'
     )

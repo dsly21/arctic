@@ -11,7 +11,6 @@
                 <div class="card-header ">Зарегистрироваться</div>
 
                 <div class="card-body" >
-                    {% load userfilters %}
                     {% if form.errors %}
                         {% for field in form %}
                             {% for error in field.errors %}
@@ -29,30 +28,8 @@
 
                     <form method="post" action="{% url 'users:signup' %}">
                         {% csrf_token %}
-
-                        {# Выводим поля в цикле, по отдельности #}
                         {{ form|crispy }}
-{#                        {% for field in form %}#}
-{#                            <div class="form-group row my-3" style="padding-left: 3%; padding-right: 3%">#}
-{#                                <label for="{{ field.id_for_label }}">#}
-{#                                    {{ field.label }}#}
-{#                                    {% if field.field.required %}#}
-{#                                        <span class="required text-danger">*</span>#}
-{#                                    {% endif %}#}
-{#                                </label>#}
-                                {# К полю ввода добавляем атрибут class #}
-{#                                {{ field|addclass:'form-control' }}#}
-{#                                {% if field.help_text %}#}
-{#                                    <small#}
-{#                                            id="{{ field.id_for_label }}-help"#}
-{#                                            class="form-text text-muted"#}
-{#                                    >#}
-{#                                        {{ field.help_text|safe }}#}
-{#                                    </small>#}
-{#                                {% endif %}#}
-{#                            </div>#}
-{#                        {% endfor %}#}
-                        <div class="col-md-6 offset-md-4">
+                        <div class="col-md-6 offset-md-4 d-flex justify-content-center">
                             <button type="submit" class="btn btn-dark">
                                 Зарегистрироваться
                             </button>
