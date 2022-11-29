@@ -56,7 +56,7 @@ def subscribers_post_list(request):
     context = {
         'posts': posts,
     }
-    return render(request, 'posts/index.html', context)
+    return render(request, 'posts/post_list.html', context)
 
 
 def competition_post_list(request):
@@ -65,7 +65,7 @@ def competition_post_list(request):
     context = {
         'posts': posts,
     }
-    return render(request, 'posts/index.html', context)
+    return render(request, 'posts/post_list.html', context)
 
 
 def useful_links(request):
@@ -74,7 +74,7 @@ def useful_links(request):
     context = {
         'posts': posts,
     }
-    return render(request, 'posts/index.html', context)
+    return render(request, 'posts/post_list.html', context)
 
 
 def get_contact_info_inst(request):
