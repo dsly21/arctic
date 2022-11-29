@@ -31,10 +31,12 @@ class Post(models.Model):
         related_name='posts',
         verbose_name='автор'
     )
-    # image = models.ForeignKey(
-    #     Image,
-    #     on_delete=models.CASCADE,
-    # )
+    images = models.ImageField(
+        'Картинка',
+        upload_to='posts/',
+        blank=True,
+        null=True,
+    )
     video = EmbedVideoField(
         blank=True,
         null=True,
