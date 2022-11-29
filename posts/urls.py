@@ -5,11 +5,20 @@ from . import views
 app_name = 'posts'
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path(
+        '',
+        views.index,
+        name='index'
+    ),
     path(
         'posts/',
         views.post_list,
         name='post_list'
+    ),
+    path(
+        'posts/create/',
+        views.post_create_view,
+        name='create_post'
     ),
     path(
         'posts/<int:pk>/',

@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from django.utils import timezone
 from embed_video.fields import EmbedVideoField
 
 SUBSCRIBERS = 'FROM_SUBSCRIBERS'
@@ -21,7 +22,7 @@ class Post(models.Model):
     )
     text = models.TextField(verbose_name='текст')
     pub_date = models.DateTimeField(
-        auto_now_add=True,
+        default=timezone.now,
         verbose_name='дата публикации'
     )
     author = models.ForeignKey(
@@ -30,12 +31,10 @@ class Post(models.Model):
         related_name='posts',
         verbose_name='автор'
     )
-    image = models.ImageField(
-        'Картинка',
-        upload_to='posts/',
-        blank=True,
-        null=True,
-    )
+    # image = models.ForeignKey(
+    #     Image,
+    #     on_delete=models.CASCADE,
+    # )
     video = EmbedVideoField(
         blank=True,
         null=True,
@@ -45,6 +44,23 @@ class Post(models.Model):
         choices=PostType.choices,
         default=PostType.BASE_POST,
         verbose_name='тип публикации'
+    )
+    permission_publish = models.BooleanField(
+        verbose_name='одобрено к публикации',
+        default=False
+    )
+
+
+class Image(models.Model):
+    image = models.ImageField(
+        'Картинка',
+        upload_to='posts/',
+        blank=True,
+        null=True,
+    )
+    post = models.ForeignKey(
+        Post,
+        on_delete=models.CASCADE,
     )
 
 

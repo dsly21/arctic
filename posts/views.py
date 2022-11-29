@@ -1,8 +1,13 @@
+from django.contrib import messages
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse
+from django.views.generic import CreateView
 
+from posts.forms import PostForm, ImageForm
 from posts.models import (
     Post,
-    ContactInformation,
+    ContactInformation, Image,
 )
 
 
@@ -79,3 +84,21 @@ def get_contact_info_inst(request):
         'info': info,
     }
     return render(request, 'posts/contact_info.html', context)
+
+
+def post_create_view(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        files = request.FILES.get_list("image")
+        if form.is_valid:
+            post = form.save(commit=False)
+            post.user = request.user
+            post.save()
+            for file in files:
+                Image.objects.create(image=file, post=post)
+            messages.success(request, 'Пост создан')
+        return HttpResponseRedirect(reverse('posts:post_list'))
+    else:
+        form = PostForm()
+        image_form = ImageForm()
+    return render(request, "create_post.html", {'form': form, 'image': image_form})

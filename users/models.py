@@ -58,7 +58,7 @@ class UserFriendInstance(models.Model):
     )
 
     date_action_use = models.DateTimeField(
-        default=timezone.now(),
+        default=timezone.now,
         verbose_name='дата использования функции "найти друзей"'
     )
     user_friends = models.ForeignKey(
