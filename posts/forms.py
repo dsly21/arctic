@@ -23,7 +23,8 @@ class ImageForm(forms.ModelForm):
 
     image = forms.ImageField(
         required=False,
-        label='изображение',
+        label='Изображение',
+        help_text='Добавьте одно или несколько изображений.',
         widget=forms.ClearableFileInput(attrs={'multiple': True})
     )
 
@@ -34,7 +35,8 @@ class VideoForm(forms.ModelForm):
         fields = ['video', ]
 
     video = EmbedVideoFormField(
-        label='видео',
+        label='Видео',
         required=False,
+        help_text='Добавьте сюда ссылку на видео, например: https://www.youtube.com/',
         #widget=forms.ClearableFileInput(attrs={'multiple': True})
     )

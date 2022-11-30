@@ -1,16 +1,16 @@
+from datetime import timedelta
+
 from django.contrib import messages
-from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.views import View
-from django.views.generic import CreateView, TemplateView, DetailView
+from django.views.generic import CreateView
 from django.contrib.auth.views import PasswordChangeDoneView, PasswordChangeView
 
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
 
 from .forms import UserCreateOrUpdateForm, FindFriendForm
-from .models import UserFriendInstance, User
+from .models import UserFriendInstance
 
 
 @login_required
@@ -59,24 +59,24 @@ class FindFriendView(View):
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
+
         if form.is_valid():
-            # из всех друзей возвращаем ближайшего по возрасту, смотрим, чтобы он не был в списке друзей.
-            # создаём инстанс User Friends, либо меняем если уже есть. Добавляем туда нового друга и обновляем дату
-            # не должен получать сам себя
-            if UserFriendInstance.objects.exists():  # есть ли кто-то вообще
+            if UserFriendInstance.objects.exists():
                 '''
                 Request user already looking for friends?
                 '''
-                if UserFriendInstance.objects.filter(user=request.user.id).exists():
-                    # TODO: add time validation
-                    # TODO: add english comments
+                request_user_friend_instance = UserFriendInstance.objects.filter(user=request.user)
+                if request_user_friend_instance.exists():
                     # TODO: add logic nearest to age
-                    # TODO: add logic not admin
-                    # if UserFriendInstance.objects.get(user=request.user).date_action_use.hour < 24:  # сколько прошло времени с последнего поиска
-                    #     error_message = 'слишком частое использование, вернитесь позже'
-                    # else:
-                    # Возвращаем друга, но не самого себя
-                    # Возвращаем друга, которого нет в списке друзей пользователя
+                    # TODO: add display hours, then user will can use to action
+                    date_action_use = request_user_friend_instance.first().date_action_use
+                    if date_action_use < date_action_use + timedelta(days=1):
+                        messages.error(
+                            request,
+                            'слишком частое использование, вернитесь позже.'
+                            #f'{(date_action_use + timedelta(days=1)) - date_action_use} часов'
+                        )
+                        return render(request, self.template_name, {'form': form})
                     '''
                     Return a friend but not:
                      - himself
@@ -94,7 +94,7 @@ class FindFriendView(View):
                         return render(request, "users/find_friend_modal.html", context={'friend': friend})
                     else:
                         messages.error(request, 'Друзей не нашлось(')
-                        # return render(request, "users/find_friend.html")
+                        return render(request, self.template_name, {'form': form})
 
                 else:
                     friend = UserFriendInstance.objects.first()
@@ -111,6 +111,7 @@ class FindFriendView(View):
                     friend.save()
                     return render(request, "users/find_friend_modal.html", context={'friend': friend})
             else:
-                error_message = 'Друзей не нашлось'
+                messages.error(request, 'Друзей не нашлось(')
+                return render(request, self.template_name, {'form': form})
         return render(request, self.template_name, {'form': form})
 

@@ -3,10 +3,10 @@
 {% block title %}Войти{% endblock %}
 {% block content %}
     <div class="row justify-content-center">
-        <div class="col-md-4 p-5">
+        <div class="col-md-7 p-5">
             <div class="card">
 
-                <div class="card-body container">
+                <div class="card-body">
 
                     {% if form.errors %}
                         {% for field in form %}
@@ -35,7 +35,7 @@
                             {{ hidden }}
                         {% endfor %}
                         {% for field in form %}
-                            <div class="form-group row my-3 container"
+                            <div class="form-group row my-3"
                                     {% if field.field.required %}
                                  aria-required="true"
                                     {% else %}
@@ -59,18 +59,57 @@
                             </div>
                         {% endfor %}
 
-                        <div class="container" style="margin-bottom: 4%">
-                            {{ image_form.management_form }}
-                            {% for form in image_form %}
-                                {{ form }}
-                            {% endfor %}
-                        </div>
-                        <div class="container" style="margin-bottom: 4%">
-                            {{ video_form.management_form }}
-                            {% for form in video_form %}
-                                {{ form }}
-                            {% endfor %}
-                        </div>
+                        {{ image_form.management_form }}
+                        {% for form in image_form %}
+                            <div class="form-group row my-3"
+                                    {% if form.field.required %}
+                                        aria-required="true"
+                                    {% else %}
+                                        aria-required="false"
+                                    {% endif %}
+                            >
+                                <label for="{{ form.id_for_label }}">
+                                    {{ form.label }}
+                                    {% if form.field.required %}
+                                        <span class="required text-danger">*</span>
+                                    {% endif %}
+                                </label>
+                                <div>
+                                    {{ form|addclass:'form-control' }}
+                                    {% if form.help_text %}
+                                        <small id="{{ form.id_for_label }}-help" class="form-text text-muted">
+                                            {{ form.help_text|safe }}
+                                        </small>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                        {{ video_form.management_form }}
+                        {% for form in video_form %}
+                            <div class="form-group row my-3"
+                                    {% if form.field.required %}
+                                        aria-required="true"
+                                    {% else %}
+                                        aria-required="false"
+                                    {% endif %}
+                            >
+                                <label for="{{ form.id_for_label }}">
+                                    {{ form.label }}
+                                    {% if form.field.required %}
+                                        <span class="required text-danger">*</span>
+                                    {% endif %}
+                                </label>
+                                <div>
+                                    {{ form|addclass:'form-control' }}
+                                    {% if form.help_text %}
+                                        <small id="{{ form.id_for_label }}-help" class="form-text text-muted">
+                                            {{ form.help_text|safe }}
+                                        </small>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
 
                         <div class="col-md-6 offset-md-4 text-center">
                             <button type="submit" class="btn btn-dark">
