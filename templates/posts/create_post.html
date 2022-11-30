@@ -1,30 +1,3 @@
-{#{% extends "base.html" %}#}
-{#{% block content %}#}
-{#    <div class="px-4 py-5 my-5 text-center">#}
-{#        <h1 class="display-5 fw-bold">Add New Project</h1>#}
-{#        <div class="col-lg-6 mx-auto">#}
-{#          <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">#}
-{##}
-{#            <form id="post_form" method="post" action="" enctype="multipart/form-data">#}
-{#              {% csrf_token %}#}
-{#              {% for hidden in form.hidden_fields %}#}
-{#                  {{ hidden }}#}
-{#              {% endfor %}#}
-{#              {% for field in form %}#}
-{#                  {{ field }} <br />#}
-{#              {% endfor %}#}
-{#              {{ imageform.management_form }}#}
-{#              {% for form in imageform %}#}
-{#                  {{ form }}#}
-{#              {% endfor %}#}
-{#              <input type="submit" name="submit" value="Submit" />#}
-{#            </form>#}
-{##}
-{#          </div>#}
-{#        </div>#}
-{#      </div>#}
-{#{% endblock %}#}
-
 {% extends "base.html" %}
 {% load userfilters %}
 {% block title %}Войти{% endblock %}
@@ -33,7 +6,7 @@
         <div class="col-md-4 p-5">
             <div class="card">
 
-                <div class="card-body">
+                <div class="card-body container">
 
                     {% if form.errors %}
                         {% for field in form %}
@@ -55,13 +28,14 @@
                           action="{% url 'action_url' %}"
 
                             {% endif %}
+                          enctype="multipart/form-data"
                     >
                         {% csrf_token %}
-                                      {% for hidden in form.hidden_fields %}
-                  {{ hidden }}
-              {% endfor %}
+                        {% for hidden in form.hidden_fields %}
+                            {{ hidden }}
+                        {% endfor %}
                         {% for field in form %}
-                            <div class="form-group row my-3"
+                            <div class="form-group row my-3 container"
                                     {% if field.field.required %}
                                  aria-required="true"
                                     {% else %}
@@ -84,17 +58,24 @@
                                 </div>
                             </div>
                         {% endfor %}
-                        {{ imageform.management_form }}
-                          {% for form in imageform %}
-                              {{ form }}
-                          {% endfor %}
+
+                        <div class="container" style="margin-bottom: 4%">
+                            {{ image_form.management_form }}
+                            {% for form in image_form %}
+                                {{ form }}
+                            {% endfor %}
+                        </div>
+                        <div class="container" style="margin-bottom: 4%">
+                            {{ video_form.management_form }}
+                            {% for form in video_form %}
+                                {{ form }}
+                            {% endfor %}
+                        </div>
+
                         <div class="col-md-6 offset-md-4 text-center">
                             <button type="submit" class="btn btn-dark">
                                 Добавить пост
                             </button>
-                            {#            <a href="#" class="btn btn-link btn-sm">#}
-                            {#              Забыли пароль?#}
-                            {#            </a>#}
                         </div>
                     </form>
                 </div> <!-- card body -->

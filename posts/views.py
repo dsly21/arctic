@@ -2,12 +2,12 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from django.views.generic import CreateView
 
-from posts.forms import PostForm, ImageForm
+from posts.forms import PostForm, ImageForm, VideoForm
 from posts.models import (
     Post,
-    ContactInformation, Image,
+    ContactInformation,
+    Image, Video,
 )
 
 
@@ -89,16 +89,32 @@ def get_contact_info_inst(request):
 def post_create_view(request):
     if request.method == 'POST':
         form = PostForm(request.POST)
-        files = request.FILES.get_list("image")
+        files = request.FILES.getlist("image")
+
         if form.is_valid:
             post = form.save(commit=False)
-            post.user = request.user
+            if request.user.is_superuser:
+                post.permission_publish = True
+            post.author = request.user
             post.save()
-            for file in files:
-                Image.objects.create(image=file, post=post)
+
+            if files:
+                for file in files:
+                    Image.objects.create(image=file, post=post)
+            if request.POST['video']:
+                Video.objects.create(video=request.POST['video'], post=post)
+
             messages.success(request, 'Пост создан')
         return HttpResponseRedirect(reverse('posts:post_list'))
+
     else:
         form = PostForm()
         image_form = ImageForm()
-    return render(request, "create_post.html", {'form': form, 'image': image_form})
+        video_form = VideoForm()
+
+    return render(request, "posts/create_post.html", {
+        'form': form,
+        'image_form': image_form,
+        'video_form': video_form,
+        }
+    )

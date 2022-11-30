@@ -31,17 +31,6 @@ class Post(models.Model):
         related_name='posts',
         verbose_name='автор'
     )
-    images = models.ImageField(
-        'Картинка',
-        upload_to='posts/',
-        blank=True,
-        null=True,
-    )
-    video = EmbedVideoField(
-        blank=True,
-        null=True,
-        verbose_name='видео'
-    )
     post_type = models.TextField(
         choices=PostType.choices,
         default=PostType.BASE_POST,
@@ -52,6 +41,12 @@ class Post(models.Model):
         default=False
     )
 
+    def get_post_images(self):
+        return self.image_set.select_related('post')
+
+    def get_post_video(self):
+        return self.video_set.select_related('post').first()
+
 
 class Image(models.Model):
     image = models.ImageField(
@@ -59,6 +54,18 @@ class Image(models.Model):
         upload_to='posts/',
         blank=True,
         null=True,
+    )
+    post = models.ForeignKey(
+        Post,
+        on_delete=models.CASCADE,
+    )
+
+
+class Video(models.Model):
+    video = EmbedVideoField(
+        blank=True,
+        null=True,
+        verbose_name='видео'
     )
     post = models.ForeignKey(
         Post,
