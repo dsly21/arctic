@@ -24,7 +24,9 @@
     {% endif %}
     {% if user.is_authenticated %}
         <div class="col-md-3 text-end">
-            <a href="{% url 'users:user-profile' %}" class="px-2 link-dark" >{{ user.username }}</a>
+            <a href="{% url 'users:user-profile' %}" class="px-2 link-dark">{{ user.username }}</a>
+            <a href="{% url 'users:logout' %}" class="px-2 link-dark">Выйти</a>
         </div>
+
     {% endif %}
 </header>

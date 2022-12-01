@@ -1,7 +1,8 @@
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
+from django.views.generic import UpdateView
 
 from posts.forms import PostForm, ImageForm, VideoForm
 from posts.models import (
@@ -38,6 +39,7 @@ def post_list(request):
     context = {
         'posts': posts,
     }
+    # TODO: add variable - count posts images
     return render(request, 'posts/post_list.html', context)
 
 
@@ -114,6 +116,44 @@ def post_create_view(request):
 
     return render(request, "posts/create_post.html", {
         'form': form,
+        'image_form': image_form,
+        'video_form': video_form,
+        }
+    )
+
+
+def post_update_view(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    image_instance_set = post.get_post_images()
+    video_instance = post.get_post_video()
+
+    if request.method == 'POST':
+        post_form = PostForm(request.POST, instance=post)
+        files = request.FILES.getlist("image")
+
+        if post_form.is_valid:
+            post_form.save()
+
+            if files:
+                if image_instance_set.exists():
+                    image_instance_set.delete()
+
+                for file in files:
+                    Image.objects.create(image=file, post=post)
+
+            if request.POST['video']:
+                Video.objects.create(video=request.POST['video'], post=post)
+
+            messages.success(request, 'Пост изменен')
+        return HttpResponseRedirect(reverse('posts:post_detail', args=[post.id]))
+
+    else:
+        post_form = PostForm(instance=post)
+        image_form = ImageForm()
+        video_form = VideoForm(instance=video_instance)
+
+    return render(request, "posts/post_update_form.html", {
+        'form': post_form,
         'image_form': image_form,
         'video_form': video_form,
         }
