@@ -4,8 +4,6 @@
     <div class="container py-5">
         {% for post in posts %}
             {% include "posts/includes/post_card.html" %}
-            {% if not forloop.last %}
-                <hr>{% endif %}
         {% endfor %}
     </div>
 {% endblock %}

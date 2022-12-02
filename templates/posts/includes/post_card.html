@@ -1,7 +1,7 @@
 {% load thumbnail %}
 {% load embed_video_tags %}
 
-<style>
+<style xmlns="http://www.w3.org/1999/html">
     .thumb img {
         -webkit-filter: grayscale(0);
         filter: none;
@@ -23,51 +23,54 @@
 
 <article>
     <div class="container">
-        <a href="{% url 'posts:post_detail' post.id %}" class="px-2 link-dark"><h3>{{ post.title }}</h3></a>
-
+        <a href="{% url 'posts:post_detail' post.id %}" class="px-2 link-dark">
+            <div class="h3">{{ post.title }}</div>
+        </a>
     </div>
     <ul style="padding-left: 0">
         <div class="container" style="margin-bottom: 1%">
             <b>Автор:</b> {{ post.author.username }} <br>
             <b>Дата публикации:</b> {{ post.pub_date|date:"d E Y" }}
         </div>
-
-        {% thumbnail post.main_image "960x600" crop="center" upscale=True as im %}
-            <img class="card-img my-3 rounded" src="{{ im.url }}" alt="Изображение" style="margin: 0;">
+    </ul>
+    <div class="rounded" style="background-color: #e9e9e9">
+        {% thumbnail post.main_image "960x380" crop="center" upscale=True as im %}
+            <img class="card-img my-3 border-bottom border-white border-3" src="{{ im.url }}"
+                 alt="Изображение" style="margin-top: 0 !important;">
         {% endthumbnail %}
 
-    </ul>
-    <div class="container">
-        <p>{{ post.text }}</p>
-    </div>
-
-    {% if post.get_post_images or post.get_post_video %}
-        <div class="container">
-            <div class="h4">Фото и видеоматериалы</div>
+        <div class="text-dark container">
+            <p style="padding-left: 2%">{{ post.text }}</p>
         </div>
-    {% endif %}
-    <div class="container">
-        <div class="row">
-            {% if post.get_post_images %}
-                {% for image in post.get_post_images %}
+
+        {% if post.get_post_images or post.get_post_video %}
+            <div class="container">
+                <div class="h4 text-center" style="padding-top: 2%; padding-bottom: 1%;">Фото и видеоматериалы</div>
+            </div>
+        {% endif %}
+        <div class="container">
+            <div class="row">
+                {% if post.get_post_images %}
+                    {% for image in post.get_post_images %}
+                        <div class="col-lg-3 col-md-4 col-6 thumb">
+                            <a data-fancybox="gallery{{ post.id }}" href="{{ image.image.url }}">
+                                {% thumbnail image.image "960x700" crop="center" upscale=True as im %}
+                                    <img src="{{ im.url }}" class="d-block w-100" alt="...">
+                                {% endthumbnail %}
+                            </a>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                {% if post.get_post_video %}
                     <div class="col-lg-3 col-md-4 col-6 thumb">
-                        <a data-fancybox="gallery{{ post.id }}" href="{{ image.image.url }}">
-                            {% thumbnail image.image "960x700" crop="center" upscale=True as im %}
-                                <img src="{{ im.url }}" class="d-block w-100" alt="...">
+                        <a data-fancybox="gallery" href="{{ post.get_post_video.video }}">
+                            {% thumbnail post.get_post_video.video "960x700" crop="center" upscale=True as im %}
+                                {% video post.get_post_video.video '100% x 100%' %}
                             {% endthumbnail %}
                         </a>
                     </div>
-                {% endfor %}
-            {% endif %}
-            {% if post.get_post_video %}
-                <div class="col-lg-3 col-md-4 col-6 thumb">
-                    <a data-fancybox="gallery" href="{{ post.get_post_video.video }}">
-                        {% thumbnail post.get_post_video.video "960x700" crop="center" upscale=True as im %}
-                            {% video post.get_post_video.video '100% x 100%' %}
-                        {% endthumbnail %}
-                    </a>
-                </div>
-            {% endif %}
+                {% endif %}
+            </div>
         </div>
     </div>
 
