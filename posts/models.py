@@ -20,6 +20,13 @@ class Post(models.Model):
         max_length=256,
         verbose_name='заголовок'
     )
+    main_image = models.ImageField(
+        'Главное изображение',
+        upload_to='posts/',
+        blank=True,
+        null=True,
+        help_text='Это изображение будет расположено на самом верху поста.'
+    )
     text = models.TextField(verbose_name='текст')
     pub_date = models.DateTimeField(
         default=timezone.now,

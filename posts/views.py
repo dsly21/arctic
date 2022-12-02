@@ -90,7 +90,7 @@ def get_contact_info_inst(request):
 
 def post_create_view(request):
     if request.method == 'POST':
-        form = PostForm(request.POST)
+        form = PostForm(request.POST, request.FILES)
         files = request.FILES.getlist("image")
 
         if form.is_valid:
@@ -128,11 +128,11 @@ def post_update_view(request, pk):
     video_instance = post.get_post_video()
 
     if request.method == 'POST':
-        post_form = PostForm(request.POST, instance=post)
+        post_form = PostForm(request.POST, request.FILES, instance=post)
         files = request.FILES.getlist("image")
 
         if post_form.is_valid:
-            post_form.save()
+            post_form.save(request.FILES)
 
             if files:
                 if image_instance_set.exists():

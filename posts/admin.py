@@ -1,5 +1,4 @@
 from django.contrib import admin
-from embed_video.admin import AdminVideoMixin
 
 from posts.models import (
     Post,

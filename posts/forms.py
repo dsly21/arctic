@@ -9,6 +9,7 @@ class PostForm(forms.ModelForm):
         model = Post
         fields = [
             'title',
+            'main_image',
             'text',
             'post_type',
             #'permission_publish',
