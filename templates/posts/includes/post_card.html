@@ -1,3 +1,4 @@
+{% load markdown_tag %}
 {% load thumbnail %}
 {% load embed_video_tags %}
 
@@ -40,7 +41,7 @@
         {% endthumbnail %}
 
         <div class="text-dark container">
-            <p style="padding-left: 2%; padding-top: 2%; padding-right: 2%">{{ post.text }}</p>
+            <p style="padding-left: 2%; padding-top: 2%; padding-right: 2%">{{ post.text | markdown | safe }} </p>
         </div>
 
         {% if post.get_post_images or post.get_post_video %}

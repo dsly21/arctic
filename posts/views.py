@@ -135,7 +135,7 @@ def post_update_view(request, pk):
         files = request.FILES.getlist("image")
 
         if post_form.is_valid:
-            post_form.save(request.FILES)
+            post_form.save()
 
             if files:
                 if image_instance_set.exists():

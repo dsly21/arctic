@@ -11,3 +11,5 @@ requests==2.28.1
 sorl-thumbnail==12.9.0
 sqlparse==0.4.3
 urllib3==1.26.12
+
+Markdown~=3.4.1
