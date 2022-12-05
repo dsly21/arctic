@@ -7,11 +7,11 @@ from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import DeleteView
 
-from posts.forms import PostForm, ImageForm, VideoForm
+from posts.forms import PostForm, ImageForm, VideoForm, AdminPostForm
 from posts.models import (
     Post,
     ContactInformation,
-    Image, Video,
+    Image, Video, UserfulLinks,
 )
 
 
@@ -65,6 +65,7 @@ def subscribers_post_list(request):
 
 
 def competition_post_list(request):
+    # ошибка? тут только первые 10 постов
     posts = Post.objects.filter(post_type=Post.PostType.COMPETITION).order_by('-pub_date')[:10]
 
     context = {
@@ -74,12 +75,12 @@ def competition_post_list(request):
 
 
 def useful_links(request):
-    posts = Post.objects.filter(post_type=Post.PostType.LINK_POST).order_by('-pub_date')[:10]
+    links = UserfulLinks.objects.all()
 
     context = {
-        'posts': posts,
+        'links': links,
     }
-    return render(request, 'posts/post_list.html', context)
+    return render(request, 'posts/useful_links.html', context)
 
 
 def get_contact_info_inst(request):
@@ -93,13 +94,18 @@ def get_contact_info_inst(request):
 
 def post_create_view(request):
     if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES)
+        if request.user.is_superuser:
+            form = AdminPostForm(request.POST, request.FILES)
+        else:
+            form = PostForm(request.POST, request.FILES)
         files = request.FILES.getlist("image")
 
         if form.is_valid:
             post = form.save(commit=False)
             if request.user.is_superuser:
                 post.permission_publish = True
+            else:
+                post.post_type = Post.PostType.SUBSCRIBERS
             post.author = request.user
             post.save()
 
@@ -113,7 +119,11 @@ def post_create_view(request):
         return HttpResponseRedirect(reverse('posts:post_list'))
 
     else:
-        form = PostForm()
+
+        if request.user.is_superuser:
+            form = AdminPostForm()
+        else:
+            form = PostForm()
         image_form = ImageForm()
         video_form = VideoForm()
 

@@ -40,8 +40,8 @@
                  alt="Изображение" style="margin-top: 0 !important;">
         {% endthumbnail %}
 
-        <div class="text-dark container">
-            <p style="padding-left: 2%; padding-top: 2%; padding-right: 2%">{{ post.text | markdown | safe }} </p>
+        <div class="text-dark container" style="padding-left: 2%; padding-right: 2%">
+            <p style="padding-top: 2%; ">{{ post.text | markdown | safe }} </p>
         </div>
 
         {% if post.get_post_images or post.get_post_video %}
@@ -80,7 +80,7 @@
                     <a href="{% url 'comments:comment_list' post.id %}">
                         <button type="button" class="btn btn-dark me-2 btn-sm">комментарии</button>
                     </a>
-                    {% if request.user.is_superuser %}
+                    {% if request.user.is_superuser or post.author == request.user %}
                         <a href="{% url 'posts:update_post' post.id %}">
                             <button type="button" class="btn btn-outline-dark me-2 btn-sm">редактировать</button>
                         </a>

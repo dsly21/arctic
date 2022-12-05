@@ -11,10 +11,16 @@ class PostForm(forms.ModelForm):
             'title',
             'main_image',
             'text',
-            'post_type',
+            # 'post_type',
             #'permission_publish',
         ]
         # TODO: add permission_publish
+
+
+class AdminPostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = PostForm.Meta.fields + ['post_type']
 
 
 class ImageForm(forms.ModelForm):

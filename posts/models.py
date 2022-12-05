@@ -6,7 +6,6 @@ from embed_video.fields import EmbedVideoField
 SUBSCRIBERS = 'FROM_SUBSCRIBERS'
 COMPETITION = 'COMPETITION'
 BASE_POST = 'BASE_POST'
-LINK_POST = 'LINK_POST'
 
 
 class Post(models.Model):
@@ -18,7 +17,6 @@ class Post(models.Model):
         SUBSCRIBERS = 'материал от подписчиков'
         COMPETITION = 'конкурс'
         BASE_POST = 'общий пост'
-        LINK_POST = 'пост с ссылкой'
 
     title = models.CharField(
         max_length=256,
@@ -85,7 +83,24 @@ class Video(models.Model):
 
 
 class ContactInformation(models.Model):
-    email = models.EmailField()
-    phone_number = models.CharField(max_length=20, blank=True, null=True)
+    email = models.EmailField(verbose_name='электронная почта')
+    phone_number = models.CharField(
+        max_length=20,
+        blank=True,
+        null=True,
+        verbose_name='телефонный номер'
+    )
+
+    class Meta:
+        verbose_name = 'Контакты'
+
+
+class UserfulLinks(models.Model):
+    link = models.TextField(verbose_name='ссылка')
+    description = models.TextField(verbose_name='описание')
+
+    class Meta:
+        verbose_name = 'Полезная ссылка'
+        verbose_name_plural = 'Полезные ссылки'
 
 

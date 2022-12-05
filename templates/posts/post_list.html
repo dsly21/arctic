@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% if request.user.is_superuser %}
+    {% if request.user.is_authenticated %}
         <div class="d-flex"
              style="justify-content: end; padding-top: 1%;">
             <a href="{% url 'posts:create_post' %}">

@@ -3,6 +3,7 @@ from django.contrib import admin
 from posts.models import (
     Post,
     ContactInformation,
+    UserfulLinks,
 )
 
 
@@ -31,5 +32,13 @@ class ContactInformationAdmin(admin.ModelAdmin):
     )
 
 
+class UserfulLinksAdmin(admin.ModelAdmin):
+    list_display = (
+        'link',
+        'description'
+    )
+
+
 admin.site.register(Post, PostAdmin)
 admin.site.register(ContactInformation, ContactInformationAdmin)
+admin.site.register(UserfulLinks, UserfulLinksAdmin)
