@@ -30,13 +30,14 @@
                             {{ field|addclass:'form-control' }}
                         </div>
                     {% endfor %}
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-dark btn-sm">
+                                <button type="submit" class="btn btn-dark btn-sm">
                         Отправить
                 </button>
                 <a href="{% url 'posts:post_list' %}" class="btn btn-dark btn-sm">Закрыть</a>
+                </form>
+            </div>
+            <div class="modal-footer">
+
             </div>
         </div>
     </div>
