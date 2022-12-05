@@ -15,4 +15,9 @@ urlpatterns = [
         views.comments_create_view,
         name='comment_create'
     ),
+    path(
+        'comments/update/',
+        views.comments_update_view,
+        name='comment_update'
+    ),
 ]

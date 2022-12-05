@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load markdown_tag %}
 {% load userfilters %}
 {% load static %}
 
@@ -6,7 +7,7 @@
 
     <div class="container">
         <div class="h3 panel-heading">
-            Комментарии (6)
+            Комментарии ({{ comments_count }})
         </div>
         <div class="row">
             {% for comment in comments %}
@@ -15,58 +16,44 @@
                     <div class="panel panel-info">
 
                         <div class="panel-body comments">
-                            <form method="post"
-                                    {% if action_url %}
-                                  action="{% url 'comments:comment_create' %}"
 
-                                    {% endif %}
-                                  enctype="multipart/form-data"
-                            >
-                                {% csrf_token %}
-                                <textarea class="form-control" rows="2"
-                                          placeholder="Добавьте Ваш комментарий"></textarea>
-                                <br>
-                                <a href="{% url 'comments:comment_create' post.id %}">
-                                    <button type="submit" class="btn btn-dark pull-right btn-sm justify-content-start">
-                                        Отправить
-                                    </button>
-                                </a>
-                            </form>
-
-
-                        </div>
-
-                        <hr>
-                        <ul class="media-list">
-                            <li class="media">
-                                <div class="comment">
-                                    <div class="media-body">
-                                        <strong class="text">{{ comment.author }}</strong>
-                                        <span class="text-muted">
+                            <hr>
+                            <ul class="media-list">
+                                <li class="media">
+                                    <div class="comment">
+                                        <div class="media-body">
+                                            <strong class="text">{{ comment.author }}</strong>
+                                            <span class="text-muted">
                                                 <small class="text-muted">{{ comment.comment_date }}</small>
                                              </span>
-                                        <div class="row">
-                                            <div class="col">
-                                                <p>{{ comment.text }}</p>
-                                            </div>
-                                            <div class="col">
-                                                <div class="row">
-                                                    <a href="{% url 'posts:post_list' %}" class="nav-link px-2">изменить</a>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <p>{{ comment.text | markdown | safe }}</p>
                                                 </div>
-                                                <div class="row">
-                                                    <a href="{% url 'posts:post_list' %}" class="nav-link px-2">изменить</a>
+                                                <div class="col">
+                                                    <div class="row">
+                                                        <a href="{% url 'comments:comment_update'  3 %}"
+                                                           class="nav-link px-2">изменить</a>
+                                                    </div>
+                                                    <div class="row">
+                                                        <a href="{% url 'posts:post_list' %}"
+                                                           class="nav-link px-2">удалить</a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </li>
-                        </ul>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-                </div>
             {% endfor %}
-    </div>
-    </div>
+            <a href="{% url 'comments:comment_create' post.id %}">
+                <button type="submit" class="btn btn-dark pull-right btn-sm justify-content-start">
+                    добавить комментарий
+                </button>
+            </a>
+        </div>
 
 {% endblock %}
