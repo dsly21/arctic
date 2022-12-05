@@ -72,6 +72,34 @@
                 {% endif %}
             </div>
         </div>
+        <div class="container">
+            <div class="row">
+                <div class="col d-flex justify-content-start"
+                     style="justify-content: start !important; padding-top: 1%; padding-right: 0.5%; padding-bottom: 1%">
+                    <a href="{% url 'comments:comment_list' post.id %}">
+                        <button type="button" class="btn btn-dark me-2 btn-sm">комментарии</button>
+                    </a>
+                    {% if request.user.is_superuser %}
+                        <a href="{% url 'posts:update_post' post.id %}">
+                            <button type="button" class="btn btn-outline-dark me-2 btn-sm">редактировать</button>
+                        </a>
+                        <a href="{% url 'posts:delete_post' post.id %}">
+                            <button type="button" class="btn btn-outline-dark me-2 btn-sm">удалить</button>
+                        </a>
+                    {% endif %}
+                </div>
+
+                <div class="col d-flex justify-content-end" style="justify-content: end !important;">
+{#                    <div class="text-dark">Поделиться вконтакте</div>#}
+                    {% include 'posts/includes/social_networks.html' %}
+                </div>
+
+
+                <script id="post_id" type="application/json">{{ post.id }}</script>
+
+
+            </div>
+        </div>
     </div>
 
 </article>

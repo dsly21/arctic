@@ -38,12 +38,12 @@ class UserFriendInstance(models.Model):
         help_text='Укажите название улицы, дома, квартиры. Например ул.Красного знамени, д.19, кв.2'
     )
     locality = models.CharField(
-        max_length=30,
+        max_length=300,
         verbose_name='Населённый пункт',
         help_text='Укажите ваш населённый пункт.'
     )
     country_subject = models.CharField(
-        max_length=30,
+        max_length=300,
         verbose_name='Территориальный субъект',
         help_text='Укажите ваш район, область, край или республику. Например: Приморский край.'
     )

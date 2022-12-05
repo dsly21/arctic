@@ -1,7 +1,6 @@
 from django.urls import path
 
 from . import views
-from .views import post_update_view
 
 app_name = 'posts'
 
@@ -10,6 +9,11 @@ urlpatterns = [
         '',
         views.index,
         name='index'
+    ),
+    path(
+        'posts/<int:pk>/',
+        views.post_detail,
+        name='post_detail'
     ),
     path(
         'posts/',
@@ -23,13 +27,13 @@ urlpatterns = [
     ),
     path(
         'posts/<int:pk>/update/',
-        post_update_view,
+        views.post_update_view,
         name='update_post'
     ),
     path(
-        'posts/<int:pk>/',
-        views.post_detail,
-        name='post_detail'
+        'posts/<int:pk>/delete/',
+        views.PostDeleteView.as_view(),
+        name='delete_post'
     ),
     path(
         'posts/subscribers_posts/',

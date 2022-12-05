@@ -10,6 +10,10 @@ LINK_POST = 'LINK_POST'
 
 
 class Post(models.Model):
+    class Meta:
+        verbose_name = 'Пост'
+        verbose_name_plural = 'Посты'
+
     class PostType(models.TextChoices):
         SUBSCRIBERS = 'материал от подписчиков'
         COMPETITION = 'конкурс'

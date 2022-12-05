@@ -1,8 +1,11 @@
 from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.decorators import user_passes_test
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from django.urls import reverse
-from django.views.generic import UpdateView
+from django.urls import reverse, reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views.generic import DeleteView
 
 from posts.forms import PostForm, ImageForm, VideoForm
 from posts.models import (
@@ -158,3 +161,16 @@ def post_update_view(request, pk):
         'video_form': video_form,
         }
     )
+
+
+# @method_decorator(staff_member_required, '')
+class PostDeleteView(DeleteView):
+    model = Post
+    success_url = reverse_lazy('posts:post_list')
+    success_message = 'Пост удалён.'
+
+    @user_passes_test(lambda u: u.is_superuser)
+    def delete(self, request, *args, **kwargs):
+        super().delete(self, request, *args, **kwargs)
+
+

@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load userfilters %}
+{% load static %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="h3 panel-heading">
+            Комментарии (6)
+        </div>
+        <div class="row">
+            {% for comment in comments %}
+
+                <div class="col-md-12">
+                    <div class="panel panel-info">
+
+                        <div class="panel-body comments">
+                            <form method="post"
+                                    {% if action_url %}
+                                  action="{% url 'comments:comment_create' %}"
+
+                                    {% endif %}
+                                  enctype="multipart/form-data"
+                            >
+                                {% csrf_token %}
+                                <textarea class="form-control" rows="2"
+                                          placeholder="Добавьте Ваш комментарий"></textarea>
+                                <br>
+                                <a href="{% url 'comments:comment_create' post.id %}">
+                                    <button type="submit" class="btn btn-dark pull-right btn-sm justify-content-start">
+                                        Отправить
+                                    </button>
+                                </a>
+                            </form>
+
+
+                        </div>
+
+                        <hr>
+                        <ul class="media-list">
+                            <li class="media">
+                                <div class="comment">
+                                    <div class="media-body">
+                                        <strong class="text">{{ comment.author }}</strong>
+                                        <span class="text-muted">
+                                                <small class="text-muted">{{ comment.comment_date }}</small>
+                                             </span>
+                                        <div class="row">
+                                            <div class="col">
+                                                <p>{{ comment.text }}</p>
+                                            </div>
+                                            <div class="col">
+                                                <div class="row">
+                                                    <a href="{% url 'posts:post_list' %}" class="nav-link px-2">изменить</a>
+                                                </div>
+                                                <div class="row">
+                                                    <a href="{% url 'posts:post_list' %}" class="nav-link px-2">изменить</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                </div>
+            {% endfor %}
+    </div>
+    </div>
+
+{% endblock %}

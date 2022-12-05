@@ -1,7 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    {% if request.user.is_superuser %}
+        <div class="d-flex"
+             style="justify-content: end; padding-top: 1%;">
+            <a href="{% url 'posts:create_post' %}">
+                <button type="button" class="btn btn-outline-dark me-2 btn-sm">Добавить пост</button>
+            </a>
+        </div>
+    {% endif %}
     <div class="container py-5">
+
         {% for post in posts %}
             {% include "posts/includes/post_card.html" %}
         {% endfor %}

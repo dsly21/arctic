@@ -9,6 +9,7 @@ from users.views import FindFriendView, find_friend_result_view
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('posts.urls', namespace='posts')),
+    path('posts/<int:pk>/', include('comments.urls', namespace='comments')),
     path('auth/', include('users.urls', namespace='users')),
     path('auth/', include('django.contrib.auth.urls')),
     path(

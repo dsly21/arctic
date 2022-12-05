@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load userfilters %}
+
+{% block content %}
+
+    <div class="row justify-content-center">
+        <div class="col-md-4 p-5">
+            <div class="card">
+
+                <div class="card-body">
+
+                    <form method="post"
+                            {% if action_url %}
+                          action="{% url 'action_url' %}"
+
+                            {% endif %}
+                    >
+                        {% csrf_token %}
+                        <div class="text-center" style="padding-bottom: 4%">Вы точно хотите удалить этот пост?</div>
+                        {% for field in form %}
+                            <div class="form-group row my-3"
+                            >
+                                <div>
+                                    {{ field|addclass:'form-control' }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <div class="col-md-6 offset-md-4 text-center">
+                            <button type="submit" class="btn btn-dark">
+                                Да
+                            </button>
+                            <a href="{% url 'posts:post_detail' post.id %}">
+                                <button type="button" class="btn btn-dark">
+                                    Нет
+                                </button>
+                            </a>
+                        </div>
+                    </form>
+                </div> <!-- card body -->
+            </div> <!-- card -->
+        </div> <!-- col -->
+    </div> <!-- row -->
+{% endblock %}
