@@ -34,19 +34,19 @@ class UserFriendInstance(models.Model):
         help_text='Укажите ФИО получателя письма, полностью. Например: Иванов Иван Иванович.'
     )
     postal_address = models.TextField(
-        verbose_name='Адрес проживания',
-        help_text='Укажите название улицы, дома, квартиры. Например ул.Красного знамени, д.19, кв.2'
+        verbose_name='Полный адрес проживания',
+        help_text='Например Якутская область, город Якутск, ул.Красного знамени, д.19, кв.2'
     )
-    locality = models.CharField(
-        max_length=300,
-        verbose_name='Населённый пункт',
-        help_text='Укажите ваш населённый пункт.'
-    )
-    country_subject = models.CharField(
-        max_length=300,
-        verbose_name='Территориальный субъект',
-        help_text='Укажите ваш район, область, край или республику. Например: Приморский край.'
-    )
+    # locality = models.CharField(
+    #     max_length=300,
+    #     verbose_name='Населённый пункт',
+    #     help_text='Укажите ваш населённый пункт.'
+    # )
+    # country_subject = models.CharField(
+    #     max_length=300,
+    #     verbose_name='Территориальный субъект',
+    #     help_text='Укажите ваш район, область, край или республику. Например: Приморский край.'
+    # )
     zip_code = models.CharField(
         max_length=6,
         verbose_name='Почтовый индекс',
@@ -54,7 +54,9 @@ class UserFriendInstance(models.Model):
     )
     social_network_nickname = models.CharField(
         max_length=60, verbose_name='Укажите как вас найти "вконтакте"',
-        help_text='Например id222829594'
+        help_text='Например id222829594',
+        blank=True,
+        null=True,
     )
 
     date_action_use = models.DateTimeField(

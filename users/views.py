@@ -100,9 +100,9 @@ class FindFriendView(View):
                     friend = UserFriendInstance.objects.first()
                     UserFriendInstance.objects.create(
                         user=request.user,
-                        locality=request.POST.get('locality'),
+                        # locality=request.POST.get('locality'),
                         recipient_full_name=request.POST.get('recipient_full_name'),
-                        country_subject=request.POST.get('country_subject'),
+                        # country_subject=request.POST.get('country_subject'),
                         zip_code=request.POST.get('zip_code'),
                         social_network_nickname=request.POST.get('social_network_nickname'),
                         postal_address=request.POST.get('postal_address'),
