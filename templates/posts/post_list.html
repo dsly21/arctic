@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
+{% block title %}
+    Все посты
+{% endblock %}
+
 {% block content %}
     {% if request.user.is_authenticated %}
         <div class="d-flex"

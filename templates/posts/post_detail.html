@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 
+{% block title %}
+    {{ post.title }}
+{% endblock %}
+
+
 {% block content %}
     <div class="container py-5">
         {% include "posts/includes/post_card.html" %}
