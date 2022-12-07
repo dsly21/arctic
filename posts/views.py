@@ -4,10 +4,13 @@ from django.contrib.auth.decorators import user_passes_test
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse, reverse_lazy
-from django.utils.decorators import method_decorator
 from django.views.generic import DeleteView
 
-from posts.forms import PostForm, ImageForm, VideoForm, AdminPostForm
+from posts.forms import (
+    PostForm,
+    ImageForm,
+    VideoForm
+)
 from posts.models import (
     Post,
     ContactInformation,
@@ -55,25 +58,6 @@ def post_detail(request, pk):
     return render(request, 'posts/post_detail.html', context)
 
 
-def subscribers_post_list(request):
-    posts = Post.objects.filter(post_type=Post.PostType.SUBSCRIBERS).order_by('-pub_date')[:10]
-
-    context = {
-        'posts': posts,
-    }
-    return render(request, 'posts/post_list.html', context)
-
-
-def competition_post_list(request):
-    # ошибка? тут только первые 10 постов
-    posts = Post.objects.filter(post_type=Post.PostType.COMPETITION).order_by('-pub_date')[:10]
-
-    context = {
-        'posts': posts,
-    }
-    return render(request, 'posts/post_list.html', context)
-
-
 def useful_links(request):
     links = UserfulLinks.objects.all()
 
@@ -94,18 +78,11 @@ def get_contact_info_inst(request):
 
 def post_create_view(request):
     if request.method == 'POST':
-        if request.user.is_superuser:
-            form = AdminPostForm(request.POST, request.FILES)
-        else:
-            form = PostForm(request.POST, request.FILES)
+        form = PostForm(request.POST, request.FILES)
         files = request.FILES.getlist("image")
 
         if form.is_valid:
             post = form.save(commit=False)
-            if request.user.is_superuser:
-                post.permission_publish = True
-            else:
-                post.post_type = Post.PostType.SUBSCRIBERS
             post.author = request.user
             post.save()
 
@@ -120,10 +97,7 @@ def post_create_view(request):
 
     else:
 
-        if request.user.is_superuser:
-            form = AdminPostForm()
-        else:
-            form = PostForm()
+        form = PostForm()
         image_form = ImageForm()
         video_form = VideoForm()
 

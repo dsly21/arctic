@@ -3,20 +3,11 @@ from django.db import models
 from django.utils import timezone
 from embed_video.fields import EmbedVideoField
 
-SUBSCRIBERS = 'FROM_SUBSCRIBERS'
-COMPETITION = 'COMPETITION'
-BASE_POST = 'BASE_POST'
-
 
 class Post(models.Model):
     class Meta:
         verbose_name = 'Пост'
         verbose_name_plural = 'Посты'
-
-    class PostType(models.TextChoices):
-        SUBSCRIBERS = 'материал от подписчиков'
-        COMPETITION = 'конкурс'
-        BASE_POST = 'общий пост'
 
     title = models.CharField(
         max_length=256,
@@ -39,15 +30,6 @@ class Post(models.Model):
         on_delete=models.CASCADE,
         related_name='posts',
         verbose_name='автор'
-    )
-    post_type = models.TextField(
-        choices=PostType.choices,
-        default=PostType.BASE_POST,
-        verbose_name='тип публикации'
-    )
-    permission_publish = models.BooleanField(
-        verbose_name='одобрено к публикации',
-        default=False
     )
 
     def get_post_images(self):

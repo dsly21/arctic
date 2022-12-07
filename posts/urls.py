@@ -36,16 +36,6 @@ urlpatterns = [
         name='delete_post'
     ),
     path(
-        'posts/subscribers_posts/',
-        views.subscribers_post_list,
-        name='subscribers_posts'
-    ),
-    path(
-        'posts/competition_posts/',
-        views.competition_post_list,
-        name='competition_posts'
-    ),
-    path(
         'links/',
         views.useful_links,
         name='useful_links'
