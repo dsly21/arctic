@@ -14,7 +14,7 @@ from posts.forms import (
 from posts.models import (
     Post,
     ContactInformation,
-    Image, Video, UserfulLinks,
+    Image, Video, UserfulLinks, AboutUs,
 )
 
 
@@ -68,7 +68,7 @@ def useful_links(request):
 
 
 def get_contact_info_inst(request):
-    info = ContactInformation.objects.first()
+    info = ContactInformation.objects.all()
 
     context = {
         'info': info,
@@ -145,6 +145,11 @@ def post_update_view(request, pk):
         'video_form': video_form,
         }
     )
+
+
+def about_us_view(request):
+    about_us_obj = get_object_or_404(AboutUs)
+    return render(request, 'about/about_us.html', {'about_us': about_us_obj})
 
 
 # @method_decorator(staff_member_required, '')

@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
-    <div class="container py-5">
+    <div class="bg-image d-flex"
+         style="background-image: url({% static 'img/man.jpg' %});height: 130vh;">
         <article>
             {% for link in links %}
                 <ul>

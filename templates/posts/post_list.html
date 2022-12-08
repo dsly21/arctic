@@ -60,11 +60,15 @@
     </style>
 
     <div class="bg-image d-flex justify-content-center align-items-center"
-         style="background-image: url({% static 'img/photo_one_child.jpeg' %});height: 100vh;">
-            <h1 class="text-white text-center lh-base my-4" style="width: 90%">
-                Здесь можно найти наши новости, фото и видео материалы, конкурсы и еще
-                много всего интересного!
-            </h1>
+         style="background-image: url({% static 'img/family1.jpg' %});height: 100vh;">
+
+        <div class="rounded bg-opacity-25 bg-dark" style="width: 90%">
+                <div class="h1 lh-base text-center text-white">Здесь можно найти наши новости, фото и видео материалы, конкурсы и еще
+                много всего интересного!</div>
+        </div>
+{#            <h1 class="text-white text-center lh-base my-4" style="width: 90%">#}
+{##}
+{#            </h1>#}
     </div>
         {% if request.user.is_superuser %}
             <div class="d-flex" style="padding-top: 80px;">
@@ -91,5 +95,5 @@
             {% endfor %}
         </div>
     </div>
-    </div>
+
 {% endblock %}

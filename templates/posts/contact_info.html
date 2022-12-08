@@ -1,16 +1,33 @@
 {% extends 'base.html' %}
+{% load markdown_tag %}
+{% load static %}
 {% block content %}
-    <div class="container py-5">
-        <h1>Контактная информация</h1>
-        <article>
-            <ul>
-                <li>
-                    <p>телефон {{ info.phone_number }}</p>
-                </li>
-                <li>
-                    <p>электронная почта <b>{{ info.email }}</b></p>
-                </li>
-            </ul>
-        </article>
+
+    <div class="bg-image d-flex justify-content-center align-items-center"
+         style="background-image: url({% static 'img/wimen.jpg' %})">
+
+        <div class="rounded bg-opacity-50 bg-white" style="padding-left: 10px; padding-right: 10px;">
+            <article>
+                <h1 style="padding-bottom: 20px">Контактная информация</h1>
+                {% for contact in info %}
+                    <ul>
+                        {% if contact.email %}
+                            <li>
+                                <p>электронная почта {{ contact.email | markdown | safe }}</p>
+                            </li>
+                        {% endif %}
+                        {% if contact.phone_number %}
+
+
+                            <li>
+                                <p>{{ contact.phone_number | markdown | safe }}</p>
+                            </li>
+
+                        {% endif %}
+                    </ul>
+                {% endfor %}
+            </article>
+        </div>
+
     </div>
 {% endblock %}

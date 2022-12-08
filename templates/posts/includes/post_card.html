@@ -55,7 +55,7 @@
             <b>Дата публикации:</b> {{ post.pub_date|date:"d E Y" }}
         </div>
     </ul>
-    <div class="rounded" style="background-color: #e9e9e9">
+    <div class="rounded bg-opacity-50" style="background-color: #e9e9e9">
 
         <div class="img__container">
             {% thumbnail post.main_image "960x380" crop="center" upscale=True as im %}

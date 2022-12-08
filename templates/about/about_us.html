@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load markdown_tag %}
+{% block content %}
+
+    <div class="bg-image d-flex justify-content-center align-items-center"
+         style="background-image: url({% static 'img/bg2.jpg' %});height: 130vh;">
+
+        <div class="img__description bg-opacity-25 bg-dark">
+            <div class="text-white container" style="padding-left: 2%; padding-right: 2%">
+                <p style="padding-top: 2%; ">{{ about_us.text | markdown | safe }} </p>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

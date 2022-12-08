@@ -4,6 +4,7 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from django.views.static import serve
 
+from posts.views import about_us_view
 from users.views import FindFriendView, find_friend_result_view
 
 urlpatterns = [
@@ -22,6 +23,11 @@ urlpatterns = [
         find_friend_result_view,
         name='find_friend_modal'
     ),
+    path(
+        'about_us/',
+        about_us_view,
+        name='about_us'
+    )
 ]
 if settings.DEBUG:
     urlpatterns += static(

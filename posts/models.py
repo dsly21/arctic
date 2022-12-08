@@ -5,9 +5,6 @@ from embed_video.fields import EmbedVideoField
 
 
 class Post(models.Model):
-    class Meta:
-        verbose_name = 'Пост'
-        verbose_name_plural = 'Посты'
 
     title = models.CharField(
         max_length=256,
@@ -16,8 +13,6 @@ class Post(models.Model):
     main_image = models.ImageField(
         'Главное изображение',
         upload_to='posts/',
-        blank=True,
-        null=True,
         help_text='Это изображение будет расположено на самом верху поста.'
     )
     text = models.TextField(verbose_name='текст')
@@ -31,6 +26,10 @@ class Post(models.Model):
         related_name='posts',
         verbose_name='автор'
     )
+
+    class Meta:
+        verbose_name = 'Пост'
+        verbose_name_plural = 'Посты'
 
     def get_post_images(self):
         return self.image_set.select_related('post')
@@ -65,9 +64,13 @@ class Video(models.Model):
 
 
 class ContactInformation(models.Model):
-    email = models.EmailField(verbose_name='электронная почта')
+    email = models.EmailField(
+        verbose_name='электронная почта',
+        blank=True,
+        null=True,
+    )
     phone_number = models.CharField(
-        max_length=20,
+        max_length=100,
         blank=True,
         null=True,
         verbose_name='телефонный номер'
@@ -84,5 +87,13 @@ class UserfulLinks(models.Model):
     class Meta:
         verbose_name = 'Полезная ссылка'
         verbose_name_plural = 'Полезные ссылки'
+
+
+class AboutUs(models.Model):
+    text = models.TextField(verbose_name='текст')
+
+    class Meta:
+        verbose_name = 'О нас'
+        verbose_name_plural = 'О нас'
 
 
