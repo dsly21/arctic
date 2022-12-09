@@ -1,8 +1,10 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
+from django.views.generic import DeleteView
 
 from comments.forms import CommentForm
+from comments.models import Comment
 from posts.models import Post
 
 
@@ -37,12 +39,22 @@ def comments_create_view(request, pk):
         return render(request, 'comments/comments_create_modal.html', context)
 
 
-def comments_update_view(request, obj):
-    form = CommentForm(instance=obj)
+def comments_update_view(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
 
     if request.POST:
+        form = CommentForm(request.POST, instance=comment)
         if form.is_valid():
             form.save()
-        return HttpResponseRedirect(reverse('comments:comment_list', args=[obj.post_id]))
+        return HttpResponseRedirect(reverse('comments:comment_list', args=[comment.post_id]))
     else:
+        form = CommentForm(instance=comment)
         return render(request, "comments/comments_create_modal.html", {'form': form})
+
+
+def comments_delete_view(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    post_id = comment.post_id
+    comment.delete()
+    return HttpResponseRedirect(reverse('comments:comment_list', args=[post_id]))
+

@@ -21,14 +21,11 @@
                     или открытку
                     вашему другу, данные для отправки ниже.</b></div>
                 <li>Никнейм в соц. сети: {{ friend.social_network_nickname }}</li>
-                <li>ФИО получателя: {{ friend.recipient_full_name }}</li>
-{#                <li>Населённый пункт: {{ friend.locality }}</li>#}
-{#                <li>Область, край или район: {{ friend.country_subject }}</li>#}
+                <li>Имя и фамилия получателя: {{ friend.recipient_full_name }}</li>
                 <li>Адрес: {{ friend.postal_address }}</li>
                 <li>Почтовый индекс: {{ friend.zip_code }}</li>
                 <div class="text-dark" style="margin-top: 2%; font-size: large"><b>Вашему другу будет очень приятно!</b>
                 </div>
-                {#                </div>#}
                 <div class="modal-footer">
                     <a href="{% url 'posts:post_list' %}" class="btn btn-dark btn-sm">Закрыть</a>
                 </div>

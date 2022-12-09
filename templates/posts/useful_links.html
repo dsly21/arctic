@@ -1,14 +1,20 @@
 {% extends 'base.html' %}
 {% load static %}
+
+{% block title %}
+    Полезные ссылки
+{% endblock %}
+
 {% block content %}
-    <div class="bg-image d-flex"
-         style="background-image: url({% static 'img/man.jpg' %});height: 130vh;">
-        <article>
+    <div class="bg-image d-flex align-items-baseline"
+         style="background-image: url({% static 'img/man.jpg' %});height: 130vh; justify-content: start !important;">
+        <div class="rounded bg-opacity-25 bg-white" style="padding-bottom: 10px; padding-top: 10px; margin-top: 50px; margin-left: 50px;">
             {% for link in links %}
-                <ul>
-                    <a href="{{ link.link }}">{{ link.description }}</a>
-                </ul>
+                <div class="container" style="margin-bottom: 10px;">
+                    <a class="link-dark" href="{{ link.link }}">{{ link.description }}</a>
+                </div>
+
             {% endfor %}
-        </article>
+        </div>
     </div>
 {% endblock %}

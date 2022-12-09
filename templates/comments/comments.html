@@ -3,6 +3,10 @@
 {% load userfilters %}
 {% load static %}
 
+{% block title %}
+    Комментарии
+{% endblock %}
+
 {% block content %}
 
     <div class="container">
@@ -27,16 +31,14 @@
                                                 <small class="text-muted">{{ comment.comment_date }}</small>
                                              </span>
                                             <div class="row">
-                                                <div class="col">
+                                                <div class="col-10">
                                                     <p>{{ comment.text | markdown | safe }}</p>
                                                 </div>
-                                                <div class="col">
+                                                <div class="col-1">
                                                     <div class="row">
-                                                        <a href="{% url 'comments:comment_update'  3 %}"
+                                                        <a href="{% url 'comments:comment_update'  comment.id %}"
                                                            class="nav-link px-2">изменить</a>
-                                                    </div>
-                                                    <div class="row">
-                                                        <a href="{% url 'posts:post_list' %}"
+                                                        <a href="{% url 'comments:comment_delete' comment.id %}"
                                                            class="nav-link px-2">удалить</a>
                                                     </div>
                                                 </div>
@@ -51,9 +53,9 @@
             {% endfor %}
             <a href="{% url 'comments:comment_create' post.id %}">
                 <button type="submit" class="btn btn-dark pull-right btn-sm justify-content-start">
-                    добавить комментарий
+                    Добавить комментарий
                 </button>
             </a>
         </div>
-
+    </div>
 {% endblock %}

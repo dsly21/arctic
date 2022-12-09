@@ -20,4 +20,9 @@ urlpatterns = [
         views.comments_update_view,
         name='comment_update'
     ),
+    path(
+        'comments/delete/',
+        views.comments_delete_view,
+        name='comment_delete'
+    ),
 ]
