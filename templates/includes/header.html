@@ -14,17 +14,17 @@
 
     <div class="container-fluid">
         <div class="row justify-content-between align-items-center" style="padding-right: 10px; padding-left: 10px;">
-            <div class="col-md-3">
+            <div class="col col-md-3">
                 <a class="navbar-brand" href="{% url 'posts:index' %}">
                     <img src="{% static 'img/fav/logo1.jpg' %}" alt="" width="95" height="80">
                  </a>
             </div>
 
-            <ul class="nav navbar-inverse col-12 col-md-auto mb-2 mb-md-0">
+            <div class="col col-12 col-md-auto nav navbar-inverse mb-2 mb-md-0">
                 {% include 'includes/base_navigation_menu.html' %}
-            </ul>
+            </div>
 
-            <div class="col-md-3 text-end">
+            <div class="col col-md-3 text-end">
                 {% if not user.is_authenticated %}
                     <a href="{% url 'users:login' %}" class="btn btn-outline-dark me-2 btn-sm" tabindex="-1" role="button" aria-disabled="true">Войти</a>
                     <a href="{% url 'users:signup' %}" class="btn btn-dark btn-sm" tabindex="-1" role="button" aria-disabled="true">Регистрация</a>

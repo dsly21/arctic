@@ -71,16 +71,16 @@
 {#            </h1>#}
     </div>
         {% if request.user.is_superuser %}
-            <div class="d-flex" style="padding-top: 80px;">
+            <div class="d-flex justify-content-center" style="padding-top: 80px;">
                 <a href="{% url 'posts:create_post' %}">
                     <button type="button" class="btn btn-outline-dark me-2 btn-lg">Добавить пост</button>
                 </a>
             </div>
         {% endif %}
     <div class="container py-5">
-        <div class="row">
+        <div class="row row-cols-1 row-cols-xl-4 row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
             {% for post in posts %}
-                <div class="col-lg-3 col-md-4 col-6 thumb">
+                <div class="col thumb">
                     <div class="img__container">
                         <a href="{% url 'posts:post_detail' post.id %}">
                             {% thumbnail post.main_image "700x600" crop="center" upscale=True as im %}
@@ -95,5 +95,4 @@
             {% endfor %}
         </div>
     </div>
-
 {% endblock %}

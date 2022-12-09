@@ -8,8 +8,10 @@
 
 {% block content %}
 
-    <div class="bg-image d-flex justify-content-center align-items-center"
-         style="background-image: url({% static 'img/bg2.jpg' %});height: 130vh;">
+    <div class="bg_nord bg-image d-flex justify-content-center align-items-center"
+         style="background-image: url({% static 'img/bg2.jpg' %});height: 130vh; @media(max-width: 1024px) {
+                 height: 200vh
+         }">
 
         <div class="img__description bg-opacity-25 bg-dark">
             <div class="text-white container" style="padding-left: 2%; padding-right: 2%">

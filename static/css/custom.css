@@ -32,6 +32,9 @@
     .d-flex {
         justify-content: center !important;
     }
+    /*.bg-image {*/
+    /*    */
+    /*}*/
 
     .offset-md-4 {
         margin-left: auto;
@@ -44,6 +47,20 @@
         justify-content: center !important;
     }
 }
+@media (max-width: 1024px) {
+    .col {
+        text-align: center !important;
+        justify-content: center !important;
+    }
+    .text_wrap {
+        margin: 10px !important;
+        /*margin-left: 5px !important;*/
+    }
+    /*.bg_nord {*/
+    /*    height: 160vh;*/
+    /*}*/
+}
+
 .thumb img {
     -webkit-filter: grayscale(0);
     filter: none;
