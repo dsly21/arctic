@@ -1,0 +1,13 @@
+
+Internal Server Error: /posts/create/
+Traceback (most recent call last):
+  File "/home/nikolay/PycharmProjects/Arctic/venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/nikolay/PycharmProjects/Arctic/venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/nikolay/PycharmProjects/Arctic/posts/views.py", line 92, in post_create_view
+    post = form.save(commit=False)
+  File "/home/nikolay/PycharmProjects/Arctic/venv/lib/python3.10/site-packages/django/forms/models.py", line 539, in save
+    raise ValueError(
+ValueError: The Post could not be created because the data didn't validate.
+"POST /posts/create/ HTTP/1.1" 500 72487

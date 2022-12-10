@@ -9,6 +9,7 @@ from django.contrib.auth.views import PasswordChangeDoneView, PasswordChangeView
 
 from django.urls import reverse_lazy
 
+# from core.views import base_view
 from .forms import UserCreateOrUpdateForm, FindFriendForm
 from .models import UserFriendInstance
 
@@ -53,10 +54,12 @@ class FindFriendView(View):
     initial = {'key': 'value'}
     template_name = 'users/find_friend.html'
 
+    # @base_view
     def get(self, request):
         form = self.form_class(initial=self.initial)
         return render(request, self.template_name, {'form': form})
 
+    # @base_view
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
 

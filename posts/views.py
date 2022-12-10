@@ -1,3 +1,5 @@
+import logging
+
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import user_passes_test
@@ -6,6 +8,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views.generic import DeleteView
 
+# from core.views import base_view
 from posts.forms import (
     PostForm,
     ImageForm,
@@ -16,6 +19,9 @@ from posts.models import (
     ContactInformation,
     Image, Video, UserfulLinks, AboutUs,
 )
+
+
+logger = logging.getLogger(__name__)
 
 
 # def get_post_list(filter_value):
@@ -76,6 +82,7 @@ def get_contact_info_inst(request):
     return render(request, 'posts/contact_info.html', context)
 
 
+# @base_view
 def post_create_view(request):
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
@@ -109,6 +116,7 @@ def post_create_view(request):
     )
 
 
+# @base_view
 def post_update_view(request, pk):
     post = get_object_or_404(Post, pk=pk)
     image_instance_set = post.get_post_images()
