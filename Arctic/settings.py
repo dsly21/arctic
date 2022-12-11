@@ -17,7 +17,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-hvn%s^89+r)v$9$u$@0z=o(+uu6j$h&l%vr^91mb68^dh)jag0'
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'localhost',
@@ -152,6 +152,11 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+      'myformatter': {
+          'format': '%(levelname)s %(asctime)s %(name)s.%(funcName)s:%(lineno)s- %(message)s',
+      }
+    },
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
@@ -160,6 +165,7 @@ LOGGING = {
             'level': 'WARNING',
             'class': 'logging.FileHandler',
             'filename': f'{BASE_DIR}/log.log',
+            'formatter': 'myformatter',
         },
     },
     'root': {
