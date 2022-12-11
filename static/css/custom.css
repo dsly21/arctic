@@ -60,6 +60,9 @@
     /*    height: 160vh;*/
     /*}*/
 }
+.bg_nord {
+    height: 160vh;
+}
 
 .thumb img {
     -webkit-filter: grayscale(0);
