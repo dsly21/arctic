@@ -1,3 +1,4 @@
+from ckeditor.fields import RichTextField
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
@@ -16,7 +17,7 @@ class Comment(models.Model):
         related_name='comments',
         verbose_name='автор',
     )
-    text = models.TextField(
+    text = RichTextField(
         verbose_name='текст'
     )
     post = models.ForeignKey(

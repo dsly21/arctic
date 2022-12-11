@@ -1,3 +1,4 @@
+from ckeditor.fields import RichTextField
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
@@ -13,9 +14,16 @@ class Post(models.Model):
     main_image = models.ImageField(
         'Главное изображение',
         upload_to='posts/',
-        help_text='Это изображение будет расположено на самом верху поста.'
+        help_text='Это изображение будет расположено на миниатюре списка публикаций и в самом верху поста.'
     )
-    text = models.TextField(verbose_name='текст')
+    main_video = EmbedVideoField(
+        blank=True,
+        null=True,
+        verbose_name='главное видео',
+        help_text='Видео будет расположено на верху страницы поста. Добавлять сюда видео нужно, когда видео ролик - это'
+                  ' основной, заглавный контент поста.'
+    )
+    text = RichTextField(verbose_name='текст')
     pub_date = models.DateTimeField(
         default=timezone.now,
         verbose_name='дата публикации'
@@ -44,6 +52,7 @@ class Image(models.Model):
         upload_to='posts/',
         blank=True,
         null=True,
+        help_text='Добавьте несколько изображений'
     )
     post = models.ForeignKey(
         Post,

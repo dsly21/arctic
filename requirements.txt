@@ -13,3 +13,4 @@ sqlparse==0.4.3
 urllib3==1.26.12
 
 Markdown~=3.4.1
+django-ckeditor~=6.5.1

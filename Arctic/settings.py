@@ -17,7 +17,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-hvn%s^89+r)v$9$u$@0z=o(+uu6j$h&l%vr^91mb68^dh)jag0'
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     'localhost',
@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'embed_video',
     'crispy_forms',
     'crispy_bootstrap5',
+    'ckeditor',
+    'ckeditor_uploader',
 ]
 
 MIDDLEWARE = [
@@ -141,6 +143,8 @@ MEDIA_URL = '/media/'
 # Path where media is stored
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+CKEDITOR_UPLOAD_PATH = os.path.join(BASE_DIR, 'static')
+
 LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = 'posts:index'
 LOGOUT_REDIRECT_URL = 'posts:index'
@@ -179,4 +183,14 @@ LOGGING = {
             'propagate': True,
         },
     }
+}
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'height': 'full',
+        'width': 'full',
+        'extraPlugins': ','.join([
+            'smiley',
+        ])
+    },
 }

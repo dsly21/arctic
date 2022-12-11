@@ -10,6 +10,7 @@ class PostForm(forms.ModelForm):
         fields = [
             'title',
             'main_image',
+            'main_video',
             'text',
         ]
 
