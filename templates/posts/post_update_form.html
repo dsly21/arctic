@@ -63,39 +63,43 @@
                             </div>
                         {% endfor %}
 
-                        {{ image_form.management_form }}
-                        {% for form in image_form %}
-                            <div class="form-group row my-3"
-                                    {% if form.field.required %}
-                                        aria-required="true"
-                                    {% else %}
-                                        aria-required="false"
-                                    {% endif %}
-                            >
-                                <label for="{{ form.id_for_label }}">
-                                    {{ form.label }}
-                                    {% if form.field.required %}
-                                        <span class="required text-danger">*</span>
-                                    {% endif %}
-                                </label>
-                                <div>
-                                    {{ form|addclass:'form-control' }}
-                                    {% if form.help_text %}
-                                        <small id="{{ form.id_for_label }}-help" class="form-text text-muted">
-                                            {{ form.help_text|safe }}
-                                        </small>
-                                    {% endif %}
+
+                            {% for form in image_forms %}
+                                <div class="form-group row my-3"
+                                        {% if form.field.required %}
+                                     aria-required="true"
+                                        {% else %}
+                                     aria-required="false"
+                                        {% endif %}
+                                >
+                                    <label for="{{ form.id_for_label }}">
+                                        {{ form.label }}
+                                        {% if form.field.required %}
+                                            <span class="required text-danger">*</span>
+                                        {% endif %}
+                                    </label>
+                                    <div>
+                                        {{ form|addclass:'form-control' }}
+                                        {% if form.help_text %}
+                                            <small id="{{ form.id_for_label }}-help" class="form-text text-muted">
+                                                {{ form.help_text|safe }}
+                                            </small>
+                                        {% endif %}
+                                    </div>
                                 </div>
-                            </div>
-                        {% endfor %}
+                            {% endfor %}
+{##}
+{#                        {% endfor %}#}
+
+
 
                         {{ video_form.management_form }}
                         {% for form in video_form %}
                             <div class="form-group row my-3"
                                     {% if form.field.required %}
-                                        aria-required="true"
+                                 aria-required="true"
                                     {% else %}
-                                        aria-required="false"
+                                 aria-required="false"
                                     {% endif %}
                             >
                                 <label for="{{ form.id_for_label }}">

@@ -3,6 +3,7 @@ import logging
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import user_passes_test
+from django.forms import inlineformset_factory, formset_factory, modelformset_factory
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse, reverse_lazy
@@ -139,17 +140,29 @@ def post_update_view(request, pk):
             if request.POST['video']:
                 Video.objects.create(video=request.POST['video'], post=post)
 
+                if video_instance:
+                    video_instance.delete()
+
+            if not request.POST['video'] and video_instance:
+                video_instance.delete()
+
             messages.success(request, 'Пост изменен')
         return HttpResponseRedirect(reverse('posts:post_detail', args=[post.id]))
 
     else:
         post_form = PostForm(instance=post)
-        image_form = ImageForm()
+
+        # image_formset = modelformset_factory(Image, fields=('image', ))
+        # image_forms = image_formset(request.POST, image_instance_set)
+        # image_forms = []
+        # for i, image in enumerate(post.get_post_images()):
+        #     image_forms.append(ImageForm(prefix=str(i), instance=image))
+        image_forms = ImageForm()
         video_form = VideoForm(instance=video_instance)
 
     return render(request, "posts/post_update_form.html", {
         'form': post_form,
-        'image_form': image_form,
+        'image_forms': image_forms,
         'video_form': video_form,
         }
     )
