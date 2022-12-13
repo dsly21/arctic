@@ -1,7 +1,6 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from django.urls import reverse, reverse_lazy
-from django.views.generic import DeleteView
+from django.urls import reverse
 
 from comments.forms import CommentForm
 from comments.models import Comment
@@ -35,6 +34,7 @@ def comments_create_view(request, pk):
         form = CommentForm()
         context = {
             'form': form,
+            'post_id': pk,
         }
         return render(request, 'comments/comments_create_modal.html', context)
 

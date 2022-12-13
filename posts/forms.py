@@ -14,6 +14,13 @@ class PostForm(forms.ModelForm):
             'text',
         ]
 
+    # def clean(self):
+    #     cleaned_data = super(PostForm, self).clean()
+    #     if cleaned_data.get('main_image') and cleaned_data.get('main_video'):
+    #         raise forms.ValidationError("У поста не может быть одновременно главного видео и главного "
+    #                                     "изображения, выберите что-то одно.")
+    #     return cleaned_data
+
 
 class ImageForm(forms.ModelForm):
     class Meta:

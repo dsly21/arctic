@@ -37,7 +37,7 @@ logger = logging.getLogger(__name__)
 
 
 def index(request):
-    posts = Post.objects.order_by('-pub_date')[:10]
+    posts = Post.objects.order_by('-pub_date')
 
     context = {
         'posts': posts,
@@ -46,7 +46,7 @@ def index(request):
 
 
 def post_list(request):
-    posts = Post.objects.order_by('-pub_date')[:10]
+    posts = Post.objects.order_by('-pub_date')
 
     context = {
         'posts': posts,
