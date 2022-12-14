@@ -3,7 +3,7 @@ from django.contrib import admin
 from posts.models import (
     Post,
     ContactInformation,
-    UserfulLinks, AboutUs,
+    UserfulLinks, AboutUs, Video,
 )
 
 
@@ -43,7 +43,12 @@ class AboutUsAdmin(admin.ModelAdmin):
     list_display = ('text', )
 
 
+class VideoAdmin(admin.ModelAdmin):
+    list_display = ('video', 'post')
+
+
 admin.site.register(Post, PostAdmin)
 admin.site.register(ContactInformation, ContactInformationAdmin)
 admin.site.register(UserfulLinks, UserfulLinksAdmin)
 admin.site.register(AboutUs, AboutUsAdmin)
+admin.site.register(Video, VideoAdmin)

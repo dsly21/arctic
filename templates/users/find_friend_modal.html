@@ -19,8 +19,13 @@
                 {#                        style="background-image: url({% static '/img/arctic_child.jpeg' %});">#}
                 <div class="text-dark" style="margin-bottom: 2%; font-size: large"><b>Теперь вы можете отправить письмо
                     или открытку
-                    вашему другу, данные для отправки ниже.</b></div>
-                <li>Никнейм в соц. сети: {{ friend.social_network_nickname }}</li>
+                    вашему другу, данные для отправки ниже.</b>
+                </div>
+
+                {% if friend.social_network_nickname %}
+                    <li>Никнейм в соц. сети: {{ friend.social_network_nickname }}</li>
+                {% endif %}
+
                 <li>Имя и фамилия получателя: {{ friend.recipient_full_name }}</li>
                 <li>Адрес: {{ friend.postal_address }}</li>
                 <li>Почтовый индекс: {{ friend.zip_code }}</li>

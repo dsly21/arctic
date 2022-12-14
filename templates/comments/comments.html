@@ -34,14 +34,18 @@
                                                 <div class="col-10">
                                                     <p>{{ comment.text | markdown | safe }}</p>
                                                 </div>
-                                                <div class="col-1">
-                                                    <div class="row">
-                                                        <a href="{% url 'comments:comment_update'  comment.id %}"
-                                                           class="nav-link px-2">изменить</a>
-                                                        <a href="{% url 'comments:comment_delete' comment.id %}"
-                                                           class="nav-link px-2">удалить</a>
+
+                                                {% if comment.author == request.user or request.user.is_superuser %}
+                                                    <div class="col-1">
+                                                        <div class="row">
+                                                            <a href="{% url 'comments:comment_update'  comment.id %}"
+                                                               class="nav-link px-2">изменить</a>
+                                                            <a href="{% url 'comments:comment_delete' comment.id %}"
+                                                               class="nav-link px-2">удалить</a>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                {% endif %}
+
                                             </div>
                                         </div>
                                     </div>
@@ -51,11 +55,15 @@
                     </div>
                 </div>
             {% endfor %}
-            <a href="{% url 'comments:comment_create' post.id %}">
-                <button type="submit" class="btn btn-dark pull-right btn-sm justify-content-start">
-                    Добавить комментарий
-                </button>
-            </a>
+
+            {% if user.is_authenticated %}
+                <a href="{% url 'comments:comment_create' post.id %}">
+                    <button type="submit" class="btn btn-dark pull-right btn-sm justify-content-start">
+                        Добавить комментарий
+                    </button>
+                </a>
+            {% endif %}
+
         </div>
     </div>
 {% endblock %}

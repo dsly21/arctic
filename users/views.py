@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import timedelta, datetime
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -68,12 +68,12 @@ class FindFriendView(View):
                 '''
                 Request user already looking for friends?
                 '''
-                request_user_friend_instance = UserFriendInstance.objects.filter(user=request.user)
-                if request_user_friend_instance.exists():
+                request_user_friend_instance = UserFriendInstance.objects.filter(user=request.user).first()
+                if request_user_friend_instance:
                     # TODO: add logic nearest to age
                     # TODO: add display hours, then user will can use to action
-                    date_action_use = request_user_friend_instance.first().date_action_use
-                    if date_action_use < date_action_use + timedelta(days=1):
+                    date_action_use = request_user_friend_instance.date_action_use
+                    if (datetime.now() - date_action_use.replace(tzinfo=None)) < timedelta(days=1):
                         messages.error(
                             request,
                             'слишком частое использование, вернитесь позже.'
@@ -88,7 +88,36 @@ class FindFriendView(View):
                     '''
                     friend = UserFriendInstance.objects\
                         .exclude(user=request.user)\
-                        .exclude(user_friends=request.user)\
+                        .exclude(user__is_superuser=True)\
+                        .exclude(user_friends=request.user) \
+                        .exclude(user__arctic_region_flag=request.user.arctic_region_flag) \
+                        .first()
+
+                    if friend:
+                        request_user_friend_instance.date_action_use = datetime.now()
+                        request_user_friend_instance.save()
+
+                        friend.user_friends = request.user
+                        friend.save()
+
+                        return render(request, "users/find_friend_modal.html", context={'friend': friend})
+                    else:
+                        messages.error(request, 'Друзей не нашлось(')
+                        return render(request, self.template_name, {'form': form})
+
+                else:
+                    UserFriendInstance.objects.create(
+                        user=request.user,
+                        recipient_full_name=request.POST.get('recipient_full_name'),
+                        zip_code=request.POST.get('zip_code'),
+                        social_network_nickname=request.POST.get('social_network_nickname'),
+                        postal_address=request.POST.get('postal_address'),
+                    )
+
+                    friend = UserFriendInstance.objects\
+                        .exclude(user__is_superuser=True) \
+                        .exclude(user=request.user) \
+                        .exclude(user__arctic_region_flag=request.user.arctic_region_flag) \
                         .first()
 
                     if friend:
@@ -98,21 +127,6 @@ class FindFriendView(View):
                     else:
                         messages.error(request, 'Друзей не нашлось(')
                         return render(request, self.template_name, {'form': form})
-
-                else:
-                    friend = UserFriendInstance.objects.first()
-                    UserFriendInstance.objects.create(
-                        user=request.user,
-                        # locality=request.POST.get('locality'),
-                        recipient_full_name=request.POST.get('recipient_full_name'),
-                        # country_subject=request.POST.get('country_subject'),
-                        zip_code=request.POST.get('zip_code'),
-                        social_network_nickname=request.POST.get('social_network_nickname'),
-                        postal_address=request.POST.get('postal_address'),
-                    )
-                    friend.user_friends = request.user
-                    friend.save()
-                    return render(request, "users/find_friend_modal.html", context={'friend': friend})
             else:
                 messages.error(request, 'Друзей не нашлось(')
                 return render(request, self.template_name, {'form': form})
