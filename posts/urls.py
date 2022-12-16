@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import permission_required
 from django.urls import path
 
 from . import views

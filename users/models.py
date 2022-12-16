@@ -37,16 +37,6 @@ class UserFriendInstance(models.Model):
         verbose_name='Полный адрес проживания',
         help_text='Например Якутская область, город Якутск, ул.Красного знамени, д.19, кв.2'
     )
-    # locality = models.CharField(
-    #     max_length=300,
-    #     verbose_name='Населённый пункт',
-    #     help_text='Укажите ваш населённый пункт.'
-    # )
-    # country_subject = models.CharField(
-    #     max_length=300,
-    #     verbose_name='Территориальный субъект',
-    #     help_text='Укажите ваш район, область, край или республику. Например: Приморский край.'
-    # )
     zip_code = models.CharField(
         max_length=6,
         verbose_name='Почтовый индекс',
@@ -63,11 +53,12 @@ class UserFriendInstance(models.Model):
         default=timezone.now,
         verbose_name='дата использования функции "найти друзей"'
     )
-    user_friends = models.ForeignKey(
-        User,
+    user_friends = models.JSONField(
         blank=True,
-        null=True,
         verbose_name='список друзей пользователя',
-        on_delete=models.CASCADE,
-        related_name='friends'
+        default=list
+    )
+    friendship_count = models.IntegerField(
+        verbose_name='количество друзей',
+        default=0
     )

@@ -10,6 +10,7 @@ class UserAdmin(admin.ModelAdmin):
         'birth_year',
         'arctic_region_flag',
         'email',
+        'password',
     )
 
 
@@ -19,11 +20,10 @@ class UserFriendInstanceAdmin(admin.ModelAdmin):
         'recipient_full_name',
         'social_network_nickname',
         'postal_address',
-        # 'locality',
-        # 'country_subject',
         'zip_code',
         'date_action_use',
         'user_friends',
+        'friendship_count'
     )
 
 

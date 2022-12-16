@@ -2,6 +2,7 @@ from datetime import timedelta, datetime
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import CreateView
@@ -9,7 +10,6 @@ from django.contrib.auth.views import PasswordChangeDoneView, PasswordChangeView
 
 from django.urls import reverse_lazy
 
-# from core.views import base_view
 from .forms import UserCreateOrUpdateForm, FindFriendForm
 from .models import UserFriendInstance
 
@@ -86,18 +86,21 @@ class FindFriendView(View):
                      - admin
                      - not a user who has already been
                     '''
-                    friend = UserFriendInstance.objects\
-                        .exclude(user=request.user)\
-                        .exclude(user__is_superuser=True)\
-                        .exclude(user_friends=request.user) \
-                        .exclude(user__arctic_region_flag=request.user.arctic_region_flag) \
-                        .first()
+                    friend = (UserFriendInstance.objects
+                        .exclude(user=request.user)                                             # himself
+                        .exclude(user__is_superuser=True)                                       # admin
+                        .exclude(user__username__in=request_user_friend_instance.user_friends)  # not a user who has
+                                                                                                # already been
+                        .exclude(user__arctic_region_flag=request.user.arctic_region_flag)      # user with same region
+                        .order_by('friendship_count')
+                        .first())
 
                     if friend:
                         request_user_friend_instance.date_action_use = datetime.now()
+                        request_user_friend_instance.user_friends.append(friend.user.username)
                         request_user_friend_instance.save()
 
-                        friend.user_friends = request.user
+                        friend.friendship_count += 1
                         friend.save()
 
                         return render(request, "users/find_friend_modal.html", context={'friend': friend})
@@ -106,7 +109,7 @@ class FindFriendView(View):
                         return render(request, self.template_name, {'form': form})
 
                 else:
-                    UserFriendInstance.objects.create(
+                    request_user_friend_instance = UserFriendInstance.objects.create(
                         user=request.user,
                         recipient_full_name=request.POST.get('recipient_full_name'),
                         zip_code=request.POST.get('zip_code'),
@@ -114,14 +117,18 @@ class FindFriendView(View):
                         postal_address=request.POST.get('postal_address'),
                     )
 
-                    friend = UserFriendInstance.objects\
-                        .exclude(user__is_superuser=True) \
-                        .exclude(user=request.user) \
-                        .exclude(user__arctic_region_flag=request.user.arctic_region_flag) \
-                        .first()
+                    friend = (UserFriendInstance.objects
+                        .exclude(user__is_superuser=True)
+                        .exclude(user=request.user)
+                        .exclude(user__arctic_region_flag=request.user.arctic_region_flag)
+                        .order_by('friendship_count')
+                        .first())
 
                     if friend:
-                        friend.user_friends = request.user
+                        request_user_friend_instance.user_friends.append(friend.user.username)
+                        request_user_friend_instance.save()
+
+                        friend.friendship_count += 1
                         friend.save()
                         return render(request, "users/find_friend_modal.html", context={'friend': friend})
                     else:

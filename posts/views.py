@@ -83,7 +83,7 @@ def get_contact_info_inst(request):
     return render(request, 'posts/contact_info.html', context)
 
 
-# @base_view
+# @user_passes_test(lambda u: u.is_superuser, login_url='', redirect_field_name='')
 def post_create_view(request):
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
