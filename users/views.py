@@ -153,19 +153,19 @@ def password_reset_view(request):
         if password_reset_form.is_valid():
             mail = password_reset_form.cleaned_data.get('email')
             try:
-                user = settings.AUTH_USER_MODEL.objects.get(email=mail)
+                user = User.objects.get(email=mail)
             except Exception:
                 user = False
             if user:
                 subject = 'Запрошено восстановление пароля'
-                email_template = 'user/password_reset_form'
+                email_template = 'users/password_reset_msg.html'
                 cont = {
                     'email': user.email,
                     'domain': '',
                     'site_name': '',
                     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                     'user': user,
-                    'token': default_token_generator(user),
+                    'token': default_token_generator.make_token(user),
                     'protocol': 'http'
                 }
                 msg_html = render_to_string(email_template, cont)
