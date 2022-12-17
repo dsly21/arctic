@@ -17,7 +17,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-hvn%s^89+r)v$9$u$@0z=o(+uu6j$h&l%vr^91mb68^dh)jag0'
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'localhost',
@@ -194,3 +194,15 @@ CKEDITOR_CONFIGS = {
         ])
     },
 }
+
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = 'smtp.beget.com'
+EMAIL_HOST_USER = 'arktikavkonverte@yandex.ru'
+EMAIL_HOST_PASSWORD = 'B!Lrvnad/6E+ZhY'
+DEFAULT_FROM_EMAIL = 'Арктика в конверте'
+EMAIL_PORT = 2525
+EMAIL_USE_TLS = True

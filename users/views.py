@@ -2,8 +2,15 @@ from datetime import timedelta, datetime
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q
+from django.contrib.auth.forms import PasswordResetForm
+from django.contrib.auth.tokens import default_token_generator
+from django.core.mail import send_mail
+from django.conf import settings
+from django.http import BadHeaderError, HttpResponse
 from django.shortcuts import render, redirect
+from django.template.loader import render_to_string
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
 from django.views import View
 from django.views.generic import CreateView
 from django.contrib.auth.views import PasswordChangeDoneView, PasswordChangeView
@@ -11,7 +18,7 @@ from django.contrib.auth.views import PasswordChangeDoneView, PasswordChangeView
 from django.urls import reverse_lazy
 
 from .forms import UserCreateOrUpdateForm, FindFriendForm
-from .models import UserFriendInstance
+from .models import UserFriendInstance, User
 
 
 @login_required
@@ -138,4 +145,46 @@ class FindFriendView(View):
                 messages.error(request, 'Друзей не нашлось(')
                 return render(request, self.template_name, {'form': form})
         return render(request, self.template_name, {'form': form})
+
+
+def password_reset_view(request):
+    if request.method == 'POST':
+        password_reset_form = PasswordResetForm(request.POST)
+        if password_reset_form.is_valid():
+            mail = password_reset_form.cleaned_data.get('email')
+            try:
+                user = settings.AUTH_USER_MODEL.objects.get(email=mail)
+            except Exception:
+                user = False
+            if user:
+                subject = 'Запрошено восстановление пароля'
+                email_template = 'user/password_reset_form'
+                cont = {
+                    'email': user.email,
+                    'domain': '',
+                    'site_name': '',
+                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                    'user': user,
+                    'token': default_token_generator(user),
+                    'protocol': 'http'
+                }
+                msg_html = render_to_string(email_template, cont)
+                try:
+                    send_mail(
+                        subject,
+                        'ссылка',
+                        settings.EMAIL_HOST_USER,
+                        [user.email],
+                        fail_silently=True,
+                        html_message=msg_html
+                    )
+                except BadHeaderError:
+                    return HttpResponse('Обнаружен недопустимый заголовок.')
+                return redirect('password_reset_done')
+        else:
+            messages.error(request, 'пользователь не найден, сообщите о проблеме администратору')
+            return redirect('password_reset')
+
+    password_reset_form = PasswordResetForm()
+    return render(request, 'users/password_reset_form.html', {'form': password_reset_form})
 
