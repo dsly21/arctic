@@ -204,9 +204,11 @@ if DEBUG:
 else:
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
     EMAIL_HOST = 'smtp.beget.com'
-    EMAIL_HOST_USER = 'arktikavkonverte@yandex.ru'
-    EMAIL_HOST_PASSWORD = 'B!Lrvnad/6E+ZhY'
+    EMAIL_HOST_USER = 'admin@arktikavkonverte.ru'
+    EMAIL_HOST_PASSWORD = 'k6121KDh'
     DEFAULT_FROM_EMAIL = 'Арктика в конверте'
     EMAIL_PORT = 2525
     EMAIL_USE_TLS = True
+    EMAIL_USE_SSL = False
+
 
