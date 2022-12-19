@@ -13,7 +13,7 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from django.views import View
 from django.views.generic import CreateView
-from django.contrib.auth.views import PasswordChangeDoneView, PasswordChangeView
+from django.contrib.auth.views import PasswordChangeDoneView, PasswordChangeView, PasswordResetConfirmView
 
 from django.urls import reverse_lazy
 
@@ -54,6 +54,10 @@ class CustomPasswordChangeDoneView(PasswordChangeDoneView):
 
 class CustomPasswordChangeView(PasswordChangeView):
     success_url = 'users/password_change_done.html'
+
+
+class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    template_name = 'users/password_reset_confirm.html'
 
 
 class FindFriendView(View):

@@ -10,7 +10,7 @@ from .views import (
     CustomPasswordChangeDoneView,
     CustomPasswordChangeView,
     user_profile,
-    SignUp, password_reset_view,
+    SignUp, password_reset_view, CustomPasswordResetConfirmView,
 )
 
 app_name = 'users'
@@ -50,7 +50,7 @@ urlpatterns = [
     ),
     path(
         'password_reset/<uidb64>/<token>',
-        PasswordResetConfirmView.as_view(template_name='users/password_reset_confirm.html'),
+        CustomPasswordResetConfirmView.as_view(template_name='users/password_reset_confirm.html'),
         name='password_reset'
     ),
     path(
