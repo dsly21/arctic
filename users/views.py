@@ -161,12 +161,12 @@ def password_reset_view(request):
                 email_template = 'users/password_reset_msg.html'
                 cont = {
                     'email': user.email,
-                    'domain': '',
+                    'domain': 'arktikavkonverte.ru',
                     'site_name': '',
                     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                     'user': user,
                     'token': default_token_generator.make_token(user),
-                    'protocol': 'http'
+                    'protocol': 'https'
                 }
                 msg_html = render_to_string(email_template, cont)
                 try:
