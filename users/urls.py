@@ -16,7 +16,6 @@ from .views import (
 
 app_name = 'users'
 
-
 urlpatterns = [
     path('signup/', SignUp.as_view(), name='signup'),
     path(
