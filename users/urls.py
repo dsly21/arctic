@@ -2,15 +2,16 @@ from django.contrib.auth.views import (
     LoginView,
     LogoutView,
     PasswordResetDoneView,
+    PasswordChangeView,
+    PasswordChangeDoneView,
     PasswordResetConfirmView,
 )
-from django.urls import path
+from django.urls import path, reverse_lazy
 
 from .views import (
-    CustomPasswordChangeDoneView,
-    CustomPasswordChangeView,
     user_profile,
-    SignUp, password_reset_view, CustomPasswordResetConfirmView,
+    SignUp,
+    password_reset_view,
 )
 
 app_name = 'users'
@@ -30,12 +31,15 @@ urlpatterns = [
     ),
     path(
         'password_change/',
-        CustomPasswordChangeView.as_view(template_name='users/password_change_form.html'),
+        PasswordChangeView.as_view(
+            template_name='users/password_change_form.html',
+            success_url=reverse_lazy('users:password_change_done')
+        ),
         name='password_change'
     ),
     path(
         'password_change/done/',
-        CustomPasswordChangeDoneView.as_view(template_name='users/password_change_done.html'),
+        PasswordChangeDoneView.as_view(template_name='users/password_change_done.html'),
         name='password_change_done'
     ),
     path(
@@ -50,7 +54,7 @@ urlpatterns = [
     ),
     path(
         'password_reset/<uidb64>/<token>',
-        CustomPasswordResetConfirmView.as_view(template_name='users/password_reset_confirm.html'),
+        PasswordResetConfirmView.as_view(template_name='users/password_reset_confirm.html'),
         name='password_reset_confirm'
     ),
     path(

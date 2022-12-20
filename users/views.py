@@ -13,7 +13,6 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from django.views import View
 from django.views.generic import CreateView
-from django.contrib.auth.views import PasswordChangeDoneView, PasswordChangeView, PasswordResetConfirmView
 
 from django.urls import reverse_lazy
 
@@ -46,18 +45,6 @@ class SignUp(CreateView):
     form_class = UserCreateOrUpdateForm
     success_url = reverse_lazy('posts:index')
     template_name = 'users/signup.html'
-
-
-class CustomPasswordChangeDoneView(PasswordChangeDoneView):
-    template_name = 'users/password_change_done.html'
-
-
-class CustomPasswordChangeView(PasswordChangeView):
-    success_url = 'users/password_change_done.html'
-
-
-class CustomPasswordResetConfirmView(PasswordResetConfirmView):
-    template_name = 'users/password_reset_confirm.html'
 
 
 class FindFriendView(View):
