@@ -11,7 +11,6 @@ from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import DeleteView
 
-# from core.views import base_view
 from posts.forms import (
     PostForm,
     ImageForm,
@@ -34,7 +33,7 @@ def index(request):
 def post_list(request):
     posts = Post.objects.order_by('-pub_date')
 
-    paginator = Paginator(posts, 8)
+    paginator = Paginator(posts, 1)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
