@@ -1,7 +1,7 @@
 from datetime import timedelta, datetime
 
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
@@ -16,20 +16,21 @@ from django.views.generic import CreateView
 
 from django.urls import reverse_lazy
 
-from .forms import UserCreateOrUpdateForm, FindFriendForm
+from .forms import UserCreateForm, FindFriendForm, UserUpdateForm
 from .models import UserFriendInstance, User
 
 
 @login_required
-def user_profile(request):
+def user_get_or_update(request):
     if request.method == 'POST':
-        user_form = UserCreateOrUpdateForm(request.POST, instance=request.user)
+        user_form = UserUpdateForm(request.POST, instance=request.user)
+
         if user_form.is_valid():
             user_form.save()
-            messages.success(request, 'Your profile is updated successfully')
-            return redirect(to='users-profile')
+            messages.success(request, 'Ваш профиль обновлен')
+            return redirect(reverse_lazy('users:user-profile'))
     else:
-        user_form = UserCreateOrUpdateForm(instance=request.user)
+        user_form = UserUpdateForm(instance=request.user)
     return render(request, 'users/user_profile.html', {'user_form': user_form})
 
 
@@ -42,7 +43,7 @@ def find_friend_result_view(request, obj):
 
 
 class SignUp(CreateView):
-    form_class = UserCreateOrUpdateForm
+    form_class = UserCreateForm
     success_url = reverse_lazy('posts:index')
     template_name = 'users/signup.html'
 
@@ -138,6 +139,7 @@ class FindFriendView(View):
         return render(request, self.template_name, {'form': form})
 
 
+@login_required
 def password_reset_view(request):
     if request.method == 'POST':
         password_reset_form = PasswordResetForm(request.POST)

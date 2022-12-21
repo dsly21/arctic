@@ -12,7 +12,7 @@ User = get_user_model()
 YEAR_CHOICES = [(str(i), i) for i in range(1990, (datetime.datetime.today().year-4))]
 
 
-class UserCreateOrUpdateForm(UserCreationForm):
+class UserCreateForm(UserCreationForm):
     arctic_region_flag = forms.ChoiceField(
         choices=User.UserRegion.choices,
         label='Я из арктического региона',
@@ -46,8 +46,6 @@ class FindFriendForm(forms.ModelForm):
         model = UserFriendInstance
         fields = [
             'recipient_full_name',
-            # 'country_subject',
-            # 'locality',
             'postal_address',
             'zip_code',
             'social_network_nickname',
@@ -57,10 +55,10 @@ class FindFriendForm(forms.ModelForm):
 class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = (
+        fields = [
             'first_name',
             'last_name',
             'email',
             'birth_year',
             'arctic_region_flag',
-        )
+        ]

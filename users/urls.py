@@ -10,9 +10,9 @@ from django.contrib.auth.views import (
 from django.urls import path, reverse_lazy
 
 from .views import (
-    user_profile,
     SignUp,
     password_reset_view,
+    user_get_or_update,
 )
 
 app_name = 'users'
@@ -44,7 +44,7 @@ urlpatterns = [
     ),
     path(
         'user_profile/',
-        user_profile,
+        user_get_or_update,
         name='user-profile'
     ),
     path(

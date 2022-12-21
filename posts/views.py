@@ -3,10 +3,12 @@ import logging
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import user_passes_test
+from django.core.paginator import Paginator
 from django.forms import inlineformset_factory, formset_factory, modelformset_factory
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse, reverse_lazy
+from django.utils.decorators import method_decorator
 from django.views.generic import DeleteView
 
 # from core.views import base_view
@@ -25,34 +27,20 @@ from posts.models import (
 logger = logging.getLogger(__name__)
 
 
-# def get_post_list(filter_value):
-#     if filter_value:
-#         posts = Post.objects.filter(post_type=Post.PostType.{filter_value}).order_by('-pub_date')[:10]
-#     else:
-#         posts = Post.objects.order_by('-pub_date')[:10]
-#
-#     context = {
-#         'posts': posts,
-#     }
-#     return render(request, 'posts/index.html', context)
-
-
 def index(request):
-    posts = Post.objects.order_by('-pub_date')
-
-    context = {
-        'posts': posts,
-    }
-    return render(request, 'posts/index.html', context)
+    return render(request, 'posts/index.html')
 
 
 def post_list(request):
     posts = Post.objects.order_by('-pub_date')
 
+    paginator = Paginator(posts, 8)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     context = {
-        'posts': posts,
+        'page_obj': page_obj,
     }
-    # TODO: add variable - count posts images
     return render(request, 'posts/post_list.html', context)
 
 
@@ -83,7 +71,7 @@ def get_contact_info_inst(request):
     return render(request, 'posts/contact_info.html', context)
 
 
-# @user_passes_test(lambda u: u.is_superuser, login_url='', redirect_field_name='')
+@user_passes_test(lambda u: u.is_superuser, login_url=reverse_lazy('posts:index'))
 def post_create_view(request):
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
@@ -117,7 +105,7 @@ def post_create_view(request):
     )
 
 
-# @base_view
+@user_passes_test(lambda u: u.is_superuser, login_url=reverse_lazy('posts:index'))
 def post_update_view(request, pk):
     post = get_object_or_404(Post, pk=pk)
     image_instance_set = post.get_post_images()
@@ -173,14 +161,13 @@ def about_us_view(request):
     return render(request, 'about/about_us.html', {'about_us': about_us_obj})
 
 
-# @method_decorator(staff_member_required, '')
 class PostDeleteView(DeleteView):
     model = Post
     success_url = reverse_lazy('posts:post_list')
     success_message = 'Пост удалён.'
 
-    @user_passes_test(lambda u: u.is_superuser)
-    def delete(self, request, *args, **kwargs):
-        super().delete(self, request, *args, **kwargs)
+    @method_decorator(user_passes_test(lambda u: u.is_superuser, login_url=reverse_lazy('posts:index')))
+    def post(self, request, *args, **kwargs):
+        super().post(self, request, *args, **kwargs)
 
 
