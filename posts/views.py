@@ -19,7 +19,10 @@ from posts.forms import (
 from posts.models import (
     Post,
     ContactInformation,
-    Image, Video, UserfulLinks, AboutUs,
+    Image,
+    Video,
+    UserfulLinks,
+    AboutUs,
 )
 
 

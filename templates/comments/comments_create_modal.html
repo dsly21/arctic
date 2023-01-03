@@ -6,8 +6,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
-{#<script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>#}
-{#<script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>#}
 
 <div class="modal fade modal-dialog-centered" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
      tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -15,11 +13,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Ваш комментарий</h1>
-                {#                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>#}
             </div>
             <div class="modal-body" style="margin-left: 2%; margin-right: 2%">
-                {#                <div class="d-flex align-items-center bg-image"#}
-                {#                        style="background-image: url({% static '/img/arctic_child.jpeg' %});">#}
                 <form method="post"
                         {% if action_url %}
                       action="{% url 'comments:comment_create' %}"

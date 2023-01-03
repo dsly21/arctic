@@ -6,7 +6,6 @@
 {% endblock %}
 
 {% block content %}
-
     <div class="bg-image d-flex justify-content-center align-items-center"
          style="background-image: url({% static '/img/arctic_child.jpg' %}); height: 100vh">
 
@@ -17,25 +16,20 @@
                 А еще здесь можно найти друга по переписке - просто заполни форму и получи адрес!
             </div>
             <div>
-
                 {% if user.is_authenticated %}
                     <a href="{% url 'find_friend' %}">
                         <button type="button" class="btn btn-outline-light btn-lg"
                                 style="margin-top: 10%; margin-bottom: 15%">Найти друга
                         </button>
                     </a>
-
                 {% else %}
-
                     <a href="{% url 'users:signup' %}">
                         <button type="button" class="btn btn-outline-light btn-lg"
                                 style="margin-top: 10%; margin-bottom: 15%">Найти друга
                         </button>
                     </a>
-
                 {% endif %}
             </div>
-
         </div>
     </div>
 {% endblock %}

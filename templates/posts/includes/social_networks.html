@@ -1,6 +1,5 @@
 <style>
   .social-share {
-    {#background-color: #f0f8f3;#}
     padding-top: 0.5rem;
     padding-bottom: 0.75rem;
   }
@@ -53,7 +52,6 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-  {#const postId = JSON.parse(document.getElementById('post_id').textContent);#}
 
   const createShareHtml = function (title, shareData) {
     let anchorList = [];
@@ -72,8 +70,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const $socialShare = document.querySelector('.social-share');
   if ($socialShare) {
     const url = encodeURIComponent(location.protocol + '//' + location.host + location.pathname);
-    const title = encodeURIComponent(document.title);
-    const twitterUserName = 'itchief_ru';
     const shareData = [
       {
         name: 'vk',

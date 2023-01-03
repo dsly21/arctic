@@ -1,7 +1,7 @@
 from datetime import timedelta, datetime
 
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
@@ -69,14 +69,11 @@ class FindFriendView(View):
                 '''
                 request_user_friend_instance = UserFriendInstance.objects.filter(user=request.user).first()
                 if request_user_friend_instance:
-                    # TODO: add logic nearest to age
-                    # TODO: add display hours, then user will can use to action
                     date_action_use = request_user_friend_instance.date_action_use
                     if (datetime.now() - date_action_use.replace(tzinfo=None)) < timedelta(days=1):
                         messages.error(
                             request,
                             'слишком частое использование, вернитесь позже.'
-                            #f'{(date_action_use + timedelta(days=1)) - date_action_use} часов'
                         )
                         return render(request, self.template_name, {'form': form})
                     '''
