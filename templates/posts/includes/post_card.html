@@ -56,18 +56,14 @@
         </div>
     </ul>
     <div class="rounded bg-opacity-50" style="background-color: #e9e9e9">
-
         {% if post.main_video %}
-
             <div class="embed-responsive embed-responsive-16by9" style="height: 60vh">
                 {% video post.main_video '100% x 100%' %}
             </div>
-
         {% elif post.main_image %}
-
             <div class="img__container">
                 {% thumbnail post.main_image "960x380" crop="center" upscale=True as im %}
-                    <img src="{{ im.url }}" class="card-img my-3 border-bottom border-white border-3" alt="..."
+                    <img src="{{ im.url }}" class="card-img my-3 border-bottom border-white border-3 rounded-top" alt="..."
                          style="margin: 0 !important;">
                 {% endthumbnail %}
 
@@ -75,12 +71,9 @@
                     <div class="img__header h1 text-center text-white">{{ post.title }}</div>
                 </div>
             </div>
-
         {% endif %}
-
-
-        <div class="text-dark container" style="padding-left: 2%; padding-right: 2%">
-            <p style="padding-top: 2%; ">{{ post.text | markdown | safe }} </p>
+        <div class="text-dark container" style="padding-left: 4%; padding-right: 4%">
+            <p>{{ post.text | markdown | safe }}</p>
         </div>
 
         {% if post.get_post_images or post.get_post_video %}
@@ -135,5 +128,4 @@
             </div>
         </div>
     </div>
-
 </article>

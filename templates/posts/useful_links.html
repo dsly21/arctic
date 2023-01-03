@@ -8,7 +8,7 @@
 {% block content %}
     <div class="bg-image d-flex align-items-baseline"
          style="background-image: url({% static 'img/man.jpg' %});height: 130vh; justify-content: start !important;">
-        <div class="text_wrap rounded bg-opacity-50 bg-white" style="padding-bottom: 10px; padding-top: 10px; margin-top: 50px; margin-left: 50px;">
+        <div class="text_wrap rounded bg-opacity-50 bg-white" style="padding: 1%; margin-top: 50px; margin-left: 50px;">
             {% for link in links %}
                 <div class="container" style="margin-bottom: 10px;">
                     <a class="link-dark" href="{{ link.link }}">{{ link.description }}</a>

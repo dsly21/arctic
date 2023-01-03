@@ -8,13 +8,11 @@
 
 {% block content %}
 
-    <div class="bg_nord bg-image d-flex justify-content-center align-items-center"
-         style="background-image: url({% static 'img/bg2.jpg' %});height: 160vh;
-         }">
-
-        <div class="img__description bg-opacity-25 bg-dark">
-            <div class="text-white container" style="padding-left: 2%; padding-right: 2%">
-                <p style="padding-top: 2%; ">{{ about_us.text | markdown | safe }} </p>
+    <div class="bg-image d-flex justify-content-center align-items-baseline"
+         style="background-image: url({% static 'img/bg2.jpg' %});height: 160vh;">
+        <div class="img__description bg-opacity-25 bg-dark" style="padding-bottom: 10px; padding-top: 10px; margin-top: 50px;">>
+            <div class="text-white container" style="margin-bottom: 10px;">
+                <div class="text-center" style="margin-left: 2%; margin-right: 2%">{{ about_us.text | markdown | safe }}</div>
             </div>
         </div>
     </div>
