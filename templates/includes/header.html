@@ -12,7 +12,7 @@
 
     <div class="container-fluid">
         <div class="row justify-content-between align-items-center" style="padding-right: 10px; padding-left: 10px;">
-            <div class="col col-md-3" style="padding-bottom: 1%">
+            <div class="col col-md-auto" style="padding-bottom: 1%; padding-left: 2%; padding-top: 1%;">
                 <a class="navbar-brand" href="{% url 'posts:index' %}">
                     <img src="{% static 'img/fav/logo1.jpg' %}" alt="" width="95" height="80">
                 </a>
@@ -26,7 +26,8 @@
                 {% if not user.is_authenticated %}
                     <a href="{% url 'users:login' %}" class="sign_button btn btn-outline-dark me-2 btn-sm" tabindex="-1"
                        role="button" aria-disabled="true">Войти</a>
-                    <a href="{% url 'users:signup' %}" class="sign_button btn btn-dark btn-sm" tabindex="-1" role="button"
+                    <a href="{% url 'users:signup' %}" class="sign_button btn btn-dark btn-sm" tabindex="-1"
+                       role="button"
                        aria-disabled="true">Регистрация</a>
 
                 {% endif %}
