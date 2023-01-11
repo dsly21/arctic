@@ -1,15 +1,17 @@
-
 .comments ul ul {
- margin-left: 60px;
+    margin-left: 60px;
 }
+
 .comments .comment img {
- margin-right: 20px;
+    margin-right: 20px;
 }
+
 .comments .comment {
- padding: 6px;
+    padding: 6px;
 }
+
 .comments .comment:hover {
- background: #eee;
+    background: #eee;
 }
 
 .mb-4 {
@@ -29,22 +31,41 @@
         margin-right: auto;
     }
 }
+
 @media (max-width: 1024px) {
     .col {
         text-align: center !important;
         justify-content: center !important;
     }
+
     .text_wrap {
         margin: 10px !important;
         /*margin-left: 5px !important;*/
     }
+
     .d-flex {
         justify-content: center !important;
     }
+
     /*.bg_nord {*/
     /*    height: 160vh;*/
     /*}*/
 }
+
+@media (max-width: 768px) {
+    .post_button {
+        padding-left: 0 !important;
+        padding-bottom: 2%;
+    }
+    .btn {
+        width: 120px;
+    }
+    .sign_button {
+        margin-right: 0 !important;
+        margin-bottom: 2%;
+    }
+}
+
 .bg_nord {
     height: 160vh;
 }

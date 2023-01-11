@@ -39,12 +39,19 @@
     .img__container {
         position: relative;
         margin: 20px auto 30px auto;
+        overflow: hidden;
     }
 
     .img__container > img {
         display: inline-block;
         max-width: 100%;
         height: auto;
+    }
+
+    @media (max-width: 467px) {
+        .h1 {
+            font-size: 20px;
+        }
     }
 </style>
 
@@ -63,7 +70,8 @@
         {% elif post.main_image %}
             <div class="img__container">
                 {% thumbnail post.main_image "960x380" crop="center" upscale=True as im %}
-                    <img src="{{ im.url }}" class="card-img my-3 border-bottom border-white border-3 rounded-top" alt="..."
+                    <img src="{{ im.url }}" class="card-img my-3 border-bottom border-white border-3 rounded-top"
+                         alt="..."
                          style="margin: 0 !important;">
                 {% endthumbnail %}
 
@@ -107,22 +115,28 @@
         </div>
         <div class="container">
             <div class="row">
-                <div class="col d-flex justify-content-start"
-                     style="padding-top: 1%; padding-right: 0.5%; padding-bottom: 1%">
+                <div class="post_button col-md-auto d-flex justify-content-start align-items-center"
+                     style="padding-right: 0; padding-left: 1%">
                     <a href="{% url 'comments:comment_list' post.id %}">
                         <button type="button" class="btn btn-dark me-2 btn-sm">комментарии</button>
                     </a>
-                    {% if request.user.is_superuser or post.author == request.user %}
+                </div>
+                {% if request.user.is_superuser or post.author == request.user %}
+                    <div class="post_button col-md-auto d-flex justify-content-start align-items-center"
+                         style="padding-right: 0; padding-left: 0">
                         <a href="{% url 'posts:update_post' post.id %}">
                             <button type="button" class="btn btn-outline-dark me-2 btn-sm">редактировать</button>
                         </a>
+                    </div>
+                    <div class="post_button col-md-auto d-flex justify-content-start align-items-center"
+                         style="padding-right: 0; padding-left: 0">
                         <a href="{% url 'posts:delete_post' post.id %}">
                             <button type="button" class="btn btn-outline-dark me-2 btn-sm">удалить</button>
                         </a>
-                    {% endif %}
-                </div>
+                    </div>
+                {% endif %}
 
-                <div class="col d-flex justify-content-end">
+                <div class="post_button col d-flex justify-content-end">
                     {% include 'posts/includes/social_networks.html' %}
                 </div>
             </div>
