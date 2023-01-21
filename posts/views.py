@@ -1,10 +1,10 @@
 import logging
 
 from django.contrib import messages
-from django.contrib.admin.views.decorators import staff_member_required
+# from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import user_passes_test
 from django.core.paginator import Paginator
-from django.forms import inlineformset_factory, formset_factory, modelformset_factory
+# from django.forms import inlineformset_factory, formset_factory, modelformset_factory
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse, reverse_lazy
@@ -51,6 +51,8 @@ def post_detail(request, pk):
 
     context = {
         'post': post,
+        'post_images': post.get_post_images(),
+        'post_video': post.get_post_video(),
     }
     return render(request, 'posts/post_detail.html', context)
 
@@ -94,7 +96,6 @@ def post_create_view(request):
         return HttpResponseRedirect(reverse('posts:post_list'))
 
     else:
-
         form = PostForm()
         image_form = ImageForm()
         video_form = VideoForm()
@@ -171,5 +172,4 @@ class PostDeleteView(DeleteView):
     @method_decorator(user_passes_test(lambda u: u.is_superuser, login_url=reverse_lazy('posts:index')))
     def post(self, request, *args, **kwargs):
         super().post(self, request, *args, **kwargs)
-
 

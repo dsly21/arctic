@@ -63,17 +63,19 @@
          style="background-image: url({% static 'img/family1.jpg' %});">
 
         <div class="rounded bg-opacity-25 bg-dark" style="width: 90%">
-                <div class="h1 lh-base text-center text-white">Здесь можно найти наши новости, фото и видео материалы, конкурсы и еще
-                много всего интересного!</div>
+            <div class="h1 lh-base text-center text-white">Здесь можно найти наши новости, фото и видео материалы,
+                конкурсы и еще
+                много всего интересного!
+            </div>
         </div>
     </div>
-        {% if request.user.is_superuser %}
-            <div class="d-flex justify-content-center" style="padding-top: 80px;">
-                <a href="{% url 'posts:create_post' %}">
-                    <button type="button" class="btn btn-outline-dark me-2 btn-lg">Добавить пост</button>
-                </a>
-            </div>
-        {% endif %}
+    {% if request.user.is_superuser %}
+        <div class="d-flex justify-content-center" style="padding-top: 80px;">
+            <a href="{% url 'posts:create_post' %}">
+                <button type="button" class="btn btn-outline-dark me-2 btn-lg">Добавить пост</button>
+            </a>
+        </div>
+    {% endif %}
     <div class="container py-5">
         <div class="row row-cols-1 row-cols-xl-4 row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
             {% for post in page_obj %}

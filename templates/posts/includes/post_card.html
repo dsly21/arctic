@@ -84,15 +84,15 @@
             <p>{{ post.text | markdown | safe }}</p>
         </div>
 
-        {% if post.get_post_images or post.get_post_video %}
+        {% if post_images or post_video %}
             <div class="container">
                 <div class="h4 text-center" style="padding-top: 2%; padding-bottom: 1%;">Фото и видеоматериалы</div>
             </div>
         {% endif %}
         <div class="container">
             <div class="row row-cols-1 row-cols-xl-4 row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
-                {% if post.get_post_images %}
-                    {% for image in post.get_post_images %}
+                {% if post_images %}
+                    {% for image in post_images %}
                         <div class="col thumb">
                             <a data-fancybox="gallery{{ post.id }}" href="{{ image.image.url }}">
                                 {% thumbnail image.image "960x700" crop="center" upscale=True as im %}
@@ -102,12 +102,10 @@
                         </div>
                     {% endfor %}
                 {% endif %}
-                {% if post.get_post_video %}
+                {% if post_video %}
                     <div class="col-lg-3 col-md-4 col-6 thumb">
-                        <a data-fancybox="gallery" href="{{ post.get_post_video.video }}">
-                            {% thumbnail post.get_post_video.video "960x700" crop="center" upscale=True as im %}
-                                {% video post.get_post_video.video '100% x 100%' %}
-                            {% endthumbnail %}
+                        <a data-fancybox="gallery" href="{{ post_video.video }}">
+                            {% video post_video.video '100% x 100%' %}
                         </a>
                     </div>
                 {% endif %}

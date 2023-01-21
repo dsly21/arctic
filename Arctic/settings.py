@@ -172,6 +172,10 @@ LOGGING = {
             'level': 'WARNING',
             'propagate': True,
         },
+        # 'django.db.backends': {
+        #     'level': 'DEBUG',
+        #     'handlers': ['console', ],
+        # },
     }
 }
 
@@ -201,5 +205,3 @@ else:
     EMAIL_PORT = 2525
     EMAIL_USE_TLS = True
     EMAIL_USE_SSL = False
-
-
