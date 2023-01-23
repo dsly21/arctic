@@ -6,6 +6,7 @@ from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.conf import settings
+from django.core.paginator import Paginator
 from django.http import BadHeaderError, HttpResponse
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
@@ -40,6 +41,28 @@ def find_friend_result_view(request, obj):
         'friend': obj,
     }
     return render(request, 'users/find_friend_modal.html', context)
+
+
+@login_required
+def my_friends_view(request):
+    friends = UserFriendInstance.objects.filter(
+        user__username__in=UserFriendInstance.objects.get(user=request.user).user_friends
+    ).order_by('recipient_full_name')
+    if friends:
+        paginator = Paginator(friends, 5)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
+        context = {
+            'page_obj': page_obj,
+        }
+        return render(request, 'users/find_friend/my_friends.html', context)
+    else:
+        messages.error(
+            request,
+            'Сначала вам нужно найти друзей!'
+        )
+        return redirect(reverse_lazy('find_friend'))
 
 
 class SignUp(CreateView):

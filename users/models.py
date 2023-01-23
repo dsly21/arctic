@@ -23,10 +23,6 @@ class User(AbstractUser):
 
 
 class UserFriendInstance(models.Model):
-    class Meta:
-        verbose_name = 'Пользователь в базе данных друзей'
-        verbose_name_plural = 'Пользователи в базе данных друзей'
-
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     recipient_full_name = models.CharField(
         max_length=300,
@@ -62,3 +58,7 @@ class UserFriendInstance(models.Model):
         verbose_name='количество друзей',
         default=0
     )
+
+    class Meta:
+        verbose_name = 'Пользователь в базе данных друзей'
+        verbose_name_plural = 'Пользователи в базе данных друзей'

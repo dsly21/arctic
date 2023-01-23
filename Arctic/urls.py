@@ -5,7 +5,7 @@ from django.urls import path, include, re_path
 from django.views.static import serve
 
 from posts.views import about_us_view
-from users.views import FindFriendView, find_friend_result_view
+from users.views import FindFriendView, find_friend_result_view, my_friends_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -22,6 +22,11 @@ urlpatterns = [
         'find_friend_modal/',
         find_friend_result_view,
         name='find_friend_modal'
+    ),
+    path(
+        'my_friends/',
+        my_friends_view,
+        name='my_friends'
     ),
     path(
         'about_us/',
