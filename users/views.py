@@ -7,7 +7,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.conf import settings
 from django.core.paginator import Paginator
-from django.http import BadHeaderError, HttpResponse
+from django.http import BadHeaderError, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
@@ -15,7 +15,7 @@ from django.utils.http import urlsafe_base64_encode
 from django.views import View
 from django.views.generic import CreateView
 
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 
 from .forms import UserCreateForm, FindFriendForm, UserUpdateForm
 from .models import UserFriendInstance, User
@@ -33,6 +33,16 @@ def user_get_or_update(request):
     else:
         user_form = UserUpdateForm(instance=request.user)
     return render(request, 'users/user_profile.html', {'user_form': user_form})
+
+
+@login_required
+def fried_count_for_admin_view(request):
+    friends_query_list = list(UserFriendInstance.objects.values_list('user_friends', flat=True))
+    friends_list = []
+    [friends_list.extend(i) for i in friends_query_list]
+    friends_count = len(set(friends_list))
+    messages.success(request, f'Друзей нашли уже {friends_count} человек')
+    return HttpResponseRedirect(reverse('posts:index'))
 
 
 @login_required
