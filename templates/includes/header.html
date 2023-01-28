@@ -1,38 +1,41 @@
 {% load static %}
 
-    <style>
-        .nav > li > a:hover, .nav > li > a:focus {
-            background-color: silver;
-            text-decoration: none;
-        }
-    </style>
+<style>
+    .nav > li > a:hover, .nav > li > a:focus {
+        background-color: silver;
+        text-decoration: none;
+    }
+</style>
 
 <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom"
         style="width: 100% !important;">
 
-
-
     <div class="container-fluid">
         <div class="row justify-content-between align-items-center" style="padding-right: 10px; padding-left: 10px;">
-            <div class="col col-md-3">
+            <div class="col col-md-auto" style="padding-bottom: 1%; padding-left: 2%; padding-top: 1%;">
                 <a class="navbar-brand" href="{% url 'posts:index' %}">
                     <img src="{% static 'img/fav/logo1.jpg' %}" alt="" width="95" height="80">
-                 </a>
+                </a>
             </div>
 
             <div class="col col-12 col-md-auto nav navbar-inverse mb-2 mb-md-0">
                 {% include 'includes/base_navigation_menu.html' %}
             </div>
 
-            <div class="col col-md-3 text-end">
+            <div class="col col-md-auto text-end">
                 {% if not user.is_authenticated %}
-                    <a href="{% url 'users:login' %}" class="btn btn-outline-dark me-2 btn-sm" tabindex="-1" role="button" aria-disabled="true">Войти</a>
-                    <a href="{% url 'users:signup' %}" class="btn btn-dark btn-sm" tabindex="-1" role="button" aria-disabled="true">Регистрация</a>
+                    <a href="{% url 'users:login' %}" class="sign_button btn btn-outline-dark me-2 btn-sm" tabindex="-1"
+                       role="button" aria-disabled="true">Войти</a>
+                    <a href="{% url 'users:signup' %}" class="sign_button btn btn-dark btn-sm" tabindex="-1"
+                       role="button"
+                       aria-disabled="true">Регистрация</a>
 
                 {% endif %}
                 {% if user.is_authenticated %}
                     <a href="{% url 'users:user-profile' %}" class="px-2 link-dark">{{ user.username }}</a>
-                    <a href="{% url 'users:logout' %}" class="px-2 link-dark">Выйти</a>
+                    <a href="{% url 'my_friends' %}" class="sign_button btn btn-light btn-sm" tabindex="-1"
+                       role="button"
+                       aria-disabled="true">Мои друзья</a>
 
                 {% endif %}
             </div>

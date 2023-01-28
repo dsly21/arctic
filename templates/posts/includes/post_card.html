@@ -39,12 +39,19 @@
     .img__container {
         position: relative;
         margin: 20px auto 30px auto;
+        overflow: hidden;
     }
 
     .img__container > img {
         display: inline-block;
         max-width: 100%;
         height: auto;
+    }
+
+    @media (max-width: 467px) {
+        .h1 {
+            font-size: 20px;
+        }
     }
 </style>
 
@@ -63,7 +70,8 @@
         {% elif post.main_image %}
             <div class="img__container">
                 {% thumbnail post.main_image "960x380" crop="center" upscale=True as im %}
-                    <img src="{{ im.url }}" class="card-img my-3 border-bottom border-white border-3 rounded-top" alt="..."
+                    <img src="{{ im.url }}" class="card-img my-3 border-bottom border-white border-3 rounded-top"
+                         alt="..."
                          style="margin: 0 !important;">
                 {% endthumbnail %}
 
@@ -76,15 +84,15 @@
             <p>{{ post.text | markdown | safe }}</p>
         </div>
 
-        {% if post.get_post_images or post.get_post_video %}
+        {% if post_images or post_video %}
             <div class="container">
                 <div class="h4 text-center" style="padding-top: 2%; padding-bottom: 1%;">Фото и видеоматериалы</div>
             </div>
         {% endif %}
         <div class="container">
             <div class="row row-cols-1 row-cols-xl-4 row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
-                {% if post.get_post_images %}
-                    {% for image in post.get_post_images %}
+                {% if post_images %}
+                    {% for image in post_images %}
                         <div class="col thumb">
                             <a data-fancybox="gallery{{ post.id }}" href="{{ image.image.url }}">
                                 {% thumbnail image.image "960x700" crop="center" upscale=True as im %}
@@ -94,12 +102,10 @@
                         </div>
                     {% endfor %}
                 {% endif %}
-                {% if post.get_post_video %}
+                {% if post_video %}
                     <div class="col-lg-3 col-md-4 col-6 thumb">
-                        <a data-fancybox="gallery" href="{{ post.get_post_video.video }}">
-                            {% thumbnail post.get_post_video.video "960x700" crop="center" upscale=True as im %}
-                                {% video post.get_post_video.video '100% x 100%' %}
-                            {% endthumbnail %}
+                        <a data-fancybox="gallery" href="{{ post_video.video }}">
+                            {% video post_video.video '100% x 100%' %}
                         </a>
                     </div>
                 {% endif %}
@@ -107,22 +113,28 @@
         </div>
         <div class="container">
             <div class="row">
-                <div class="col d-flex justify-content-start"
-                     style="padding-top: 1%; padding-right: 0.5%; padding-bottom: 1%">
+                <div class="post_button col-md-auto d-flex justify-content-start align-items-center"
+                     style="padding-right: 0; padding-left: 15px">
                     <a href="{% url 'comments:comment_list' post.id %}">
                         <button type="button" class="btn btn-dark me-2 btn-sm">комментарии</button>
                     </a>
-                    {% if request.user.is_superuser or post.author == request.user %}
+                </div>
+                {% if request.user.is_superuser or post.author == request.user %}
+                    <div class="post_button col-md-auto d-flex justify-content-start align-items-center"
+                         style="padding-right: 0; padding-left: 0">
                         <a href="{% url 'posts:update_post' post.id %}">
                             <button type="button" class="btn btn-outline-dark me-2 btn-sm">редактировать</button>
                         </a>
+                    </div>
+                    <div class="post_button col-md-auto d-flex justify-content-start align-items-center"
+                         style="padding-right: 0; padding-left: 0">
                         <a href="{% url 'posts:delete_post' post.id %}">
                             <button type="button" class="btn btn-outline-dark me-2 btn-sm">удалить</button>
                         </a>
-                    {% endif %}
-                </div>
+                    </div>
+                {% endif %}
 
-                <div class="col d-flex justify-content-end">
+                <div class="post_button col d-flex justify-content-end">
                     {% include 'posts/includes/social_networks.html' %}
                 </div>
             </div>

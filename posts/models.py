@@ -6,7 +6,6 @@ from embed_video.fields import EmbedVideoField
 
 
 class Post(models.Model):
-
     title = models.CharField(
         max_length=256,
         verbose_name='заголовок'
@@ -14,7 +13,8 @@ class Post(models.Model):
     main_image = models.ImageField(
         'Главное изображение',
         upload_to='posts/',
-        help_text='Это изображение будет расположено на миниатюре списка публикаций и в самом верху поста.'
+        help_text='Это изображение будет расположено на миниатюре списка публикаций и в самом верху поста. '
+                  'Внимание: название изображения должно быть на латинице. Пример: image.jpg'
     )
     main_video = EmbedVideoField(
         blank=True,
@@ -52,12 +52,17 @@ class Image(models.Model):
         upload_to='posts/',
         blank=True,
         null=True,
-        help_text='Добавьте несколько изображений'
+        help_text='Добавьте несколько изображений. Внимание: название изображения должно быть на латинице. '
+                  'Пример: image.jpg'
     )
     post = models.ForeignKey(
         Post,
         on_delete=models.CASCADE,
     )
+
+    class Meta:
+        verbose_name = 'Изображение'
+        verbose_name_plural = 'Изображения'
 
 
 class Video(models.Model):
@@ -70,6 +75,10 @@ class Video(models.Model):
         Post,
         on_delete=models.CASCADE,
     )
+
+    class Meta:
+        verbose_name = 'Видео'
+        verbose_name_plural = 'Видео'
 
 
 class ContactInformation(models.Model):
@@ -87,6 +96,7 @@ class ContactInformation(models.Model):
 
     class Meta:
         verbose_name = 'Контакты'
+        verbose_name_plural = 'Контакты'
 
 
 class UserfulLinks(models.Model):
@@ -104,5 +114,3 @@ class AboutUs(models.Model):
     class Meta:
         verbose_name = 'О нас'
         verbose_name_plural = 'О нас'
-
-

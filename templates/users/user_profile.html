@@ -40,7 +40,8 @@
                             {{ user_form.arctic_region_flag|as_crispy_field }}
                             <div class="d-flex justify-content-between bd-highlight mb-2">
                                 <div class="me-auto p-1 bd-highlight">
-                                    <a href="{% url 'users:password_change' %}">Сменить пароль</a>
+                                    <a href="{% url 'users:password_change' %}" class="px-2 link-dark">Сменить пароль</a>
+                                    <a href="{% url 'users:logout' %}" class="px-2 link-dark">Выйти</a>
                                 </div>
                             </div>
                             <hr>
