@@ -4,17 +4,12 @@ from django.utils import timezone
 
 
 class User(AbstractUser):
-    class UserRegion(models.TextChoices):
-        ARCTIC = True
-        NOT_ARCTIC = False
-
     birth_year = models.IntegerField(
         verbose_name='дата рождения',
     )
-    arctic_region_flag = models.TextField(
-        choices=UserRegion.choices,
+    arctic_region_flag = models.BooleanField(
         verbose_name='арктический регион',
-        default=UserRegion.NOT_ARCTIC,
+        default=False,
     )
 
     class Meta:

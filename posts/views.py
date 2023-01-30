@@ -46,8 +46,8 @@ def post_list(request):
     return render(request, 'posts/post_list.html', context)
 
 
-def post_detail(request, pk):
-    post = Post.objects.get(pk=pk)
+def post_detail(request, post_pk):
+    post = Post.objects.get(pk=post_pk)
 
     context = {
         'post': post,
@@ -109,8 +109,8 @@ def post_create_view(request):
 
 
 @user_passes_test(lambda u: u.is_superuser, login_url=reverse_lazy('posts:index'))
-def post_update_view(request, pk):
-    post = get_object_or_404(Post, pk=pk)
+def post_update_view(request, post_pk):
+    post = get_object_or_404(Post, pk=post_pk)
     image_instance_set = post.get_post_images()
     video_instance = post.get_post_video()
 

@@ -13,10 +13,9 @@ YEAR_CHOICES = [(str(i), i) for i in range(1990, (datetime.datetime.today().year
 
 
 class UserCreateForm(UserCreationForm):
-    arctic_region_flag = forms.ChoiceField(
-        choices=User.UserRegion.choices,
+    arctic_region_flag = forms.BooleanField(
         label='Я из арктического региона',
-        help_text='Выберете, если вы живёте в одном из регионов арктической зоны России (Список регионов)'
+        help_text='Выберете, если вы живёте в одном из регионов арктической зоны России.'
     )
     birth_year = forms.ChoiceField(
         choices=YEAR_CHOICES,

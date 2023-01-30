@@ -12,7 +12,7 @@ class TestUserFindFriends(TestCase):
             first_name='Имя',
             last_name='Фамилия',
             email='test@mail.ru',
-            arctic_region_flag=User.UserRegion.ARCTIC,
+            arctic_region_flag=True,
             birth_year=2000
         )
         self.client = Client()
