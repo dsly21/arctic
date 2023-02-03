@@ -12,7 +12,7 @@ urlpatterns = [
         name='index'
     ),
     path(
-        'posts/<int:pk>/',
+        'posts/<int:post_pk>/',
         views.post_detail,
         name='post_detail'
     ),

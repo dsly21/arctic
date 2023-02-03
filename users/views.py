@@ -55,9 +55,18 @@ def find_friend_result_view(request, obj):
 
 @login_required
 def my_friends_view(request):
+    try:
+        request_user_friend_instance = UserFriendInstance.objects.get(user=request.user)
+    except UserFriendInstance.DoesNotExist:
+        messages.error(
+            request,
+            'Сначала вам нужно найти друзей!'
+        )
+        return redirect(reverse_lazy('find_friend'))
     friends = UserFriendInstance.objects.filter(
-        user__username__in=UserFriendInstance.objects.get(user=request.user).user_friends
+        user__username__in=request_user_friend_instance.user_friends
     ).order_by('recipient_full_name')
+
     if friends:
         paginator = Paginator(friends, 5)
         page_number = request.GET.get('page')
