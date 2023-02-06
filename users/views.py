@@ -10,6 +10,7 @@ from django.core.paginator import Paginator
 from django.http import BadHeaderError, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
+from django.utils.decorators import method_decorator
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from django.views import View
@@ -95,12 +96,12 @@ class FindFriendView(View):
     initial = {'key': 'value'}
     template_name = 'users/find_friend.html'
 
-    # @base_view
+    @method_decorator(login_required)
     def get(self, request):
         form = self.form_class(initial=self.initial)
         return render(request, self.template_name, {'form': form})
 
-    # @base_view
+    @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
 
