@@ -53,6 +53,12 @@ class FindFriendForm(forms.ModelForm):
 
 
 class UserUpdateForm(forms.ModelForm):
+    arctic_region_flag = forms.BooleanField(
+        label='Я из арктического региона',
+        help_text='Выберете, если вы живёте в одном из регионов арктической зоны России.',
+        required=False
+    )
+
     class Meta:
         model = User
         fields = [
