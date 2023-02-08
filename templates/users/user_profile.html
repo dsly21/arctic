@@ -40,7 +40,8 @@
                             <div class="mb-3">
                                 <div id="div_id_arctic_region_flag" class="mb-3 form-check">
                                     <input type="checkbox" name="arctic_region_flag"
-                                           class="checkboxinput form-check-input" id="id_arctic_region_flag" {% if user.arctic_region_flag %} checked {% endif %}>
+                                           class="checkboxinput form-check-input" id="id_arctic_region_flag"
+                                            {% if user.arctic_region_flag %} checked="checked" {% endif %}>
                                     <label for="id_arctic_region_flag" class="form-check-label">
                                         Я из арктического региона
                                     </label>
