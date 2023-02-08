@@ -37,10 +37,22 @@
                             {{ user_form.first_name|as_crispy_field }}
                             {{ user_form.last_name|as_crispy_field }}
                             {{ user_form.birth_year|as_crispy_field }}
-                            {{ user_form.arctic_region_flag|as_crispy_field }}
+                            <div class="mb-3">
+                                <div id="div_id_arctic_region_flag" class="mb-3 form-check">
+                                    <input type="checkbox" name="arctic_region_flag"
+                                           class="checkboxinput form-check-input" id="id_arctic_region_flag" {% if user.arctic_region_flag %} checked {% endif %}>
+                                    <label for="id_arctic_region_flag" class="form-check-label">
+                                        Я из арктического региона
+                                    </label>
+                                    <div id="hint_id_arctic_region_flag" class="form-text">Выберете, если вы живёте в
+                                        одном из регионов арктической зоны России.
+                                    </div>
+                                </div>
+                            </div>
                             <div class="d-flex justify-content-between bd-highlight mb-2">
                                 <div class="me-auto p-1 bd-highlight">
-                                    <a href="{% url 'users:password_change' %}" class="px-2 link-dark">Сменить пароль</a>
+                                    <a href="{% url 'users:password_change' %}" class="px-2 link-dark">Сменить
+                                        пароль</a>
                                     <a href="{% url 'users:logout' %}" class="px-2 link-dark">Выйти</a>
                                 </div>
                             </div>

@@ -33,7 +33,7 @@ def user_get_or_update(request):
             return redirect(reverse_lazy('users:user-profile'))
     else:
         user_form = UserUpdateForm(instance=request.user)
-    return render(request, 'users/user_profile.html', {'user_form': user_form})
+    return render(request, 'users/user_profile.html', {'user_form': user_form, 'user': request.user})
 
 
 @login_required
