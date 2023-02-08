@@ -3,6 +3,15 @@
 {% load crispy_forms_filters %}
 {% load crispy_forms_tags %}
 
+<script type="javascript">
+    $(document).ready(function() {
+    $( ":checkbox" ).each(function( index ) {
+        $(this).prependTo($("#div_" + $(this).attr('id')))
+    });
+});
+</script>
+
+
 {% block title %}
     Профиль пользователя
 {% endblock %}
@@ -34,7 +43,10 @@
                     <div class="form-content">
                         <form method="post" enctype="multipart/form-data">
                             {% csrf_token %}
-                                {{ user_form | crispy }}
+                            {{ user_form.first_name|as_crispy_field }}
+                            {{ user_form.last_name|as_crispy_field }}
+                            {{ user_form.birth_year|as_crispy_field }}
+                            {{ user_form.arctic_region_flag | as_crispy_field }}
                             <div class="d-flex justify-content-between bd-highlight mb-2">
                                 <div class="me-auto p-1 bd-highlight">
                                     <a href="{% url 'users:password_change' %}" class="px-2 link-dark">Сменить пароль</a>
