@@ -57,7 +57,6 @@ class UserUpdateForm(forms.ModelForm):
         label='Я из арктического региона',
         help_text='Выберете, если вы живёте в одном из регионов арктической зоны России.',
         required=False,
-        initial=True
     )
 
     class Meta:
